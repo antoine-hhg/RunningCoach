@@ -1,0 +1,1321 @@
+{
+  "profile": {
+    "age": 15,
+    "event": "Half Marathon",
+    "targetTime": "1:45:00",
+    "targetPace": "4:58",
+    "currentVO2max": 483,
+    "currentPace": "5:30",
+    "raceDate": "2000-12-08",
+    "currentWeek": 1,
+    "hasSeenGuide": false,
+    "availability": {
+      "mon": 40,
+      "tue": 120,
+      "wed": 0,
+      "thu": 60,
+      "fri": 60,
+      "sat": 120,
+      "sun": 120
+    }
+  },
+  "runs": [
+    {
+      "id": 1780954479132,
+      "date": "2026-06-08",
+      "type": "easy",
+      "distance": 6.87,
+      "duration": 40.19,
+      "pace": "5.57",
+      "avgHR": 157,
+      "maxHR": 178,
+      "vo2max": 483,
+      "rpe": 3,
+      "notes": "felt good didnt notice that the goalpace was 5.30 so i did 6 but ultimately it was fun the sleep was catastrophical"
+    }
+  ],
+  "completedWorkouts": {
+    "w1_0": "2026-06-08T21:29:12.871Z"
+  },
+  "plan": {
+    "specialInformation": "I have added a 40-minute easy run to your Mondays! This bumps you up to 5 running days a week while still respecting your zero-minute Wednesday constraint and keeping Saturday completely free. Since Monday's run comes right before your Tuesday interval session, it is crucial that you keep this strictly in Zone 2 to ensure your legs are fresh for the speed work.",
+    "weeks": [
+      {
+        "week": 1,
+        "phase": "Aerobic Base & Speed Efficiency",
+        "phaseClass": "phase-1",
+        "description": "Week 1 focuses on establishing our rhythm. We've added a gentle Monday run to build aerobic volume.",
+        "workouts": [
+          {
+            "day": "Monday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "A relaxed 40-minute easy run to kick off the week. Keep it comfortable and conversational."
+          },
+          {
+            "day": "Tuesday",
+            "type": "interval",
+            "title": "Speed Reps",
+            "distance": "6 km",
+            "pace": "4:30/km for intervals",
+            "hr": "Zone 4",
+            "duration": "40 min",
+            "desc": "Start with a 15 min |warm-up| jog. Then run 6x 400m at 4:30/km pace with 90 seconds walking recovery. Finish with a 10 min |cool-down|."
+          },
+          {
+            "day": "Thursday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "6 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "35 min",
+            "desc": "A comfortable, conversational run to promote recovery. Focus on relaxed breathing and a smooth |running cadence|."
+          },
+          {
+            "day": "Friday",
+            "type": "tempo",
+            "title": "Target Pace Introduction",
+            "distance": "7 km",
+            "pace": "4:55/km",
+            "hr": "Zone 3",
+            "duration": "40 min",
+            "desc": "15 min easy |warm-up|, then 4 km continuous at your goal Half Marathon pace (4:55/km). Finish with a 10 min |cool-down|."
+          },
+          {
+            "day": "Sunday",
+            "type": "long",
+            "title": "Weekend Long Run",
+            "distance": "12 km",
+            "pace": "5:20-5:30/km",
+            "hr": "Zone 2",
+            "duration": "65 min",
+            "desc": "A steady, relaxed |long run|. Since you can handle 15km easily, use this to practice pacing discipline and fueling."
+          }
+        ]
+      },
+      {
+        "week": 2,
+        "phase": "Aerobic Base & Speed Efficiency",
+        "phaseClass": "phase-1",
+        "description": "Building slightly on the interval volume while keeping the weekend endurance run comfortable.",
+        "workouts": [
+          {
+            "day": "Monday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Flush the legs out from yesterday's long run. Nice and easy Zone 2 effort."
+          },
+          {
+            "day": "Tuesday",
+            "type": "interval",
+            "title": "Speed Reps",
+            "distance": "7 km",
+            "pace": "4:30/km for intervals",
+            "hr": "Zone 4",
+            "duration": "45 min",
+            "desc": "15 min |warm-up|. Run 8x 400m at 4:30/km with 90s recovery. Finish with a 10 min |cool-down|."
+          },
+          {
+            "day": "Thursday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Keep it easy and relaxed. Include some light |dynamic stretching| before starting."
+          },
+          {
+            "day": "Friday",
+            "type": "tempo",
+            "title": "HM Pace Tempo",
+            "distance": "8 km",
+            "pace": "4:55/km",
+            "hr": "Zone 3",
+            "duration": "45 min",
+            "desc": "15 min |warm-up|, then 5 km at goal HM pace. Finish with a 10 min |cool-down|."
+          },
+          {
+            "day": "Sunday",
+            "type": "long",
+            "title": "Weekend Long Run",
+            "distance": "14 km",
+            "pace": "5:20-5:30/km",
+            "hr": "Zone 2",
+            "duration": "75 min",
+            "desc": "Steady effort. Practice taking in some water and energy halfway through to train your stomach."
+          }
+        ]
+      },
+      {
+        "week": 3,
+        "phase": "Aerobic Base & Speed Efficiency",
+        "phaseClass": "phase-1",
+        "description": "Increasing interval length to build speed endurance, leading into a 15km long run.",
+        "workouts": [
+          {
+            "day": "Monday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Another 40-minute base run. Enjoy the rhythm."
+          },
+          {
+            "day": "Tuesday",
+            "type": "interval",
+            "title": "Longer Intervals",
+            "distance": "8 km",
+            "pace": "4:40/km for intervals",
+            "hr": "Zone 4",
+            "duration": "50 min",
+            "desc": "15 min |warm-up|. Run 5x 800m at 4:40/km with 2 minutes jogging recovery. 10 min |cool-down|."
+          },
+          {
+            "day": "Thursday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Focus on recovery after Tuesday's intervals. Keep the pace conversational."
+          },
+          {
+            "day": "Friday",
+            "type": "tempo",
+            "title": "HM Pace Tempo",
+            "distance": "9 km",
+            "pace": "4:55/km",
+            "hr": "Zone 3",
+            "duration": "50 min",
+            "desc": "15 min |warm-up|. 6 km continuous at goal HM pace (4:55). 10 min |cool-down|."
+          },
+          {
+            "day": "Sunday",
+            "type": "long",
+            "title": "Weekend Long Run",
+            "distance": "15 km",
+            "pace": "5:20-5:30/km",
+            "hr": "Zone 2",
+            "duration": "82 min",
+            "desc": "You know you can hit this distance and pace easily! Keep it disciplined and steady."
+          }
+        ]
+      },
+      {
+        "week": 4,
+        "phase": "Recovery & Adapt",
+        "phaseClass": "phase-1",
+        "description": "A deliberate step back in volume to allow your muscles to absorb the training and prevent injury.",
+        "workouts": [
+          {
+            "day": "Monday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Keep this strictly Zone 2. A light shakeout for recovery week."
+          },
+          {
+            "day": "Tuesday",
+            "type": "interval",
+            "title": "Light Speed Reps",
+            "distance": "6 km",
+            "pace": "4:30/km for intervals",
+            "hr": "Zone 4",
+            "duration": "35 min",
+            "desc": "10 min |warm-up|. Just 4x 400m at 4:30/km to keep the legs snappy. 90s recovery. 10 min |cool-down|."
+          },
+          {
+            "day": "Thursday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "5 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "30 min",
+            "desc": "Very gentle recovery run."
+          },
+          {
+            "day": "Friday",
+            "type": "easy",
+            "title": "Easy Strides",
+            "distance": "6 km",
+            "pace": "5:30/km",
+            "hr": "Zone 2",
+            "duration": "35 min",
+            "desc": "Easy run, but include 4x 20-second |strides| at the end to work on form."
+          },
+          {
+            "day": "Sunday",
+            "type": "long",
+            "title": "Reduced Long Run",
+            "distance": "10 km",
+            "pace": "5:20-5:30/km",
+            "hr": "Zone 2",
+            "duration": "55 min",
+            "desc": "A shorter effort this weekend. Enjoy the lighter load and stay relaxed."
+          }
+        ]
+      },
+      {
+        "week": 5,
+        "phase": "Specific Endurance & Threshold",
+        "phaseClass": "phase-2",
+        "description": "Moving into phase 2, we introduce longer intervals and break new ground on the long run distance.",
+        "workouts": [
+          {
+            "day": "Monday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Back to building mileage. Smooth and relaxed."
+          },
+          {
+            "day": "Tuesday",
+            "type": "interval",
+            "title": "800m Repeats",
+            "distance": "9 km",
+            "pace": "4:40/km",
+            "hr": "Zone 4",
+            "duration": "55 min",
+            "desc": "15 min |warm-up|. 6x 800m at 4:40/km with 90s walk/jog recovery. 10 min |cool-down|."
+          },
+          {
+            "day": "Thursday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "8 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "45 min",
+            "desc": "Nice and relaxed. Let your legs recover from the intervals."
+          },
+          {
+            "day": "Friday",
+            "type": "tempo",
+            "title": "Broken Tempo",
+            "distance": "9 km",
+            "pace": "4:50/km",
+            "hr": "Zone 3",
+            "duration": "50 min",
+            "desc": "15 min |warm-up|. 2x 3km at a slightly faster 4:50/km pace. Take 3 minutes of easy jogging between the 3km blocks. 10 min |cool-down|."
+          },
+          {
+            "day": "Sunday",
+            "type": "long",
+            "title": "Weekend Long Run",
+            "distance": "16 km",
+            "pace": "5:20-5:30/km",
+            "hr": "Zone 2",
+            "duration": "90 min",
+            "desc": "New distance territory! Keep it smooth and remember to fuel with a gel or sports drink."
+          }
+        ]
+      },
+      {
+        "week": 6,
+        "phase": "Specific Endurance & Threshold",
+        "phaseClass": "phase-2",
+        "description": "Increasing the intensity slightly. You are building exceptional stamina for your goal pace.",
+        "workouts": [
+          {
+            "day": "Monday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Easy recovery run to start the week right."
+          },
+          {
+            "day": "Tuesday",
+            "type": "interval",
+            "title": "Kilometer Repeats",
+            "distance": "9 km",
+            "pace": "4:40/km",
+            "hr": "Zone 4",
+            "duration": "55 min",
+            "desc": "15 min |warm-up|. 4x 1000m at 4:40/km with 2 min jogging recovery. 10 min |cool-down|."
+          },
+          {
+            "day": "Thursday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "8 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "45 min",
+            "desc": "Standard easy run. Shake out any stiffness."
+          },
+          {
+            "day": "Friday",
+            "type": "tempo",
+            "title": "Steady HM Pace",
+            "distance": "10 km",
+            "pace": "4:55/km",
+            "hr": "Zone 3",
+            "duration": "55 min",
+            "desc": "15 min |warm-up|. 7 km continuous at goal HM pace. 10 min |cool-down|."
+          },
+          {
+            "day": "Sunday",
+            "type": "long",
+            "title": "Weekend Long Run",
+            "distance": "18 km",
+            "pace": "5:20-5:30/km",
+            "hr": "Zone 2",
+            "duration": "100 min",
+            "desc": "A solid effort today. Don't worry about the pace being fast; just get the time on your feet."
+          }
+        ]
+      },
+      {
+        "week": 7,
+        "phase": "Specific Endurance & Threshold",
+        "phaseClass": "phase-2",
+        "description": "Our biggest training week before a planned drop-back. Keep focusing on good sleep and nutrition.",
+        "workouts": [
+          {
+            "day": "Monday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Stay loose and relaxed on this run."
+          },
+          {
+            "day": "Tuesday",
+            "type": "interval",
+            "title": "Kilometer Repeats",
+            "distance": "10 km",
+            "pace": "4:40/km",
+            "hr": "Zone 4",
+            "duration": "60 min",
+            "desc": "15 min |warm-up|. 5x 1000m at 4:40/km with 2 min jogging recovery. 10 min |cool-down|."
+          },
+          {
+            "day": "Thursday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "8 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "45 min",
+            "desc": "Gentle miles."
+          },
+          {
+            "day": "Friday",
+            "type": "tempo",
+            "title": "Steady HM Pace",
+            "distance": "11 km",
+            "pace": "4:55/km",
+            "hr": "Zone 3",
+            "duration": "60 min",
+            "desc": "15 min |warm-up|. 8 km continuous at goal HM pace. This should feel manageable but requires focus. 10 min |cool-down|."
+          },
+          {
+            "day": "Sunday",
+            "type": "long",
+            "title": "Weekend Long Run",
+            "distance": "19 km",
+            "pace": "5:20-5:30/km",
+            "hr": "Zone 2",
+            "duration": "105 min",
+            "desc": "Your longest run of the plan. Treat this like a dress rehearsal for race day in terms of breakfast and gear."
+          }
+        ]
+      },
+      {
+        "week": 8,
+        "phase": "Recovery & Adapt",
+        "phaseClass": "phase-2",
+        "description": "A well-earned recovery week to let the fitness gains fully settle in.",
+        "workouts": [
+          {
+            "day": "Monday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Enjoy a low-pressure recovery run."
+          },
+          {
+            "day": "Tuesday",
+            "type": "easy",
+            "title": "Easy Base",
+            "distance": "6 km",
+            "pace": "5:30/km",
+            "hr": "Zone 2",
+            "duration": "35 min",
+            "desc": "No intervals today. Just a smooth easy run to keep the blood flowing."
+          },
+          {
+            "day": "Thursday",
+            "type": "easy",
+            "title": "Easy Base",
+            "distance": "6 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "35 min",
+            "desc": "Another relaxed effort. Add some |dynamic stretching|."
+          },
+          {
+            "day": "Friday",
+            "type": "tempo",
+            "title": "Short Tempo",
+            "distance": "7 km",
+            "pace": "4:55/km",
+            "hr": "Zone 3",
+            "duration": "40 min",
+            "desc": "15 min |warm-up|, just 4 km at HM pace to stay familiar with it, then 10 min |cool-down|."
+          },
+          {
+            "day": "Sunday",
+            "type": "long",
+            "title": "Reduced Long Run",
+            "distance": "12 km",
+            "pace": "5:20-5:30/km",
+            "hr": "Zone 2",
+            "duration": "65 min",
+            "desc": "Keep it relaxed. You'll feel very fresh on this run!"
+          }
+        ]
+      },
+      {
+        "week": 9,
+        "phase": "Race Prep & Peak",
+        "phaseClass": "phase-3",
+        "description": "Entering the peaking phase. The volume is high, but the focus is specifically on race-day simulation.",
+        "workouts": [
+          {
+            "day": "Monday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Back into the peak weeks. Keep this easy and smooth."
+          },
+          {
+            "day": "Tuesday",
+            "type": "interval",
+            "title": "Speed Endurance",
+            "distance": "10 km",
+            "pace": "4:40/km",
+            "hr": "Zone 4",
+            "duration": "60 min",
+            "desc": "15 min |warm-up|. 3x 1600m (1 mile) at 4:40/km with 2.5 minutes easy jogging recovery. 10 min |cool-down|."
+          },
+          {
+            "day": "Thursday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "8 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "45 min",
+            "desc": "Flush the legs out."
+          },
+          {
+            "day": "Friday",
+            "type": "tempo",
+            "title": "Broken Tempo",
+            "distance": "11 km",
+            "pace": "4:50/km",
+            "hr": "Zone 3",
+            "duration": "60 min",
+            "desc": "15 min |warm-up|. 2x 4km at 4:50/km with 3 mins jogging recovery in between. 10 min |cool-down|."
+          },
+          {
+            "day": "Sunday",
+            "type": "long",
+            "title": "Long Run + Race Pace",
+            "distance": "18 km",
+            "pace": "Varies",
+            "hr": "Zone 2/3",
+            "duration": "95 min",
+            "desc": "Run the first 14 km at 5:30/km easy pace. For the final 4 km, drop down to your 4:58/km race pace to practice finishing strong."
+          }
+        ]
+      },
+      {
+        "week": 10,
+        "phase": "Race Prep & Peak",
+        "phaseClass": "phase-3",
+        "description": "The final hard week. We will sharpen the speed and do one last confidence-building long tempo.",
+        "workouts": [
+          {
+            "day": "Monday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Start the final big training week with a light jog."
+          },
+          {
+            "day": "Tuesday",
+            "type": "interval",
+            "title": "Speed Endurance",
+            "distance": "9 km",
+            "pace": "4:40/km",
+            "hr": "Zone 4",
+            "duration": "55 min",
+            "desc": "15 min |warm-up|. 4x 1200m at 4:40/km with 2 min jogging recovery. 10 min |cool-down|."
+          },
+          {
+            "day": "Thursday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Keep it light and easy."
+          },
+          {
+            "day": "Friday",
+            "type": "tempo",
+            "title": "Final Big Tempo",
+            "distance": "11 km",
+            "pace": "4:55/km",
+            "hr": "Zone 3",
+            "duration": "60 min",
+            "desc": "15 min |warm-up|. 8 km continuous at goal HM pace. Trust your fitness, this is your groove! 10 min |cool-down|."
+          },
+          {
+            "day": "Sunday",
+            "type": "long",
+            "title": "Weekend Long Run",
+            "distance": "16 km",
+            "pace": "5:20-5:30/km",
+            "hr": "Zone 2",
+            "duration": "88 min",
+            "desc": "Dialing the distance back just slightly to start shedding fatigue."
+          }
+        ]
+      },
+      {
+        "week": 11,
+        "phase": "Taper",
+        "phaseClass": "phase-4",
+        "description": "Taper time! We are reducing volume significantly so you arrive on race day with completely fresh legs.",
+        "workouts": [
+          {
+            "day": "Monday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Begin the taper phase with a very relaxed, effortless run."
+          },
+          {
+            "day": "Tuesday",
+            "type": "interval",
+            "title": "Sharpener",
+            "distance": "7 km",
+            "pace": "4:40/km",
+            "hr": "Zone 4",
+            "duration": "40 min",
+            "desc": "15 min |warm-up|. 5x 400m at 4:40/km with 90s jog recovery. 10 min |cool-down|. Do not push the pace, just keep legs active."
+          },
+          {
+            "day": "Thursday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "6 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "35 min",
+            "desc": "Very easy jogging."
+          },
+          {
+            "day": "Friday",
+            "type": "tempo",
+            "title": "Pace Reminder",
+            "distance": "6 km",
+            "pace": "4:55/km",
+            "hr": "Zone 3",
+            "duration": "35 min",
+            "desc": "10 min |warm-up|. 3 km at HM pace. 10 min |cool-down|. Just a light touch of speed."
+          },
+          {
+            "day": "Sunday",
+            "type": "long",
+            "title": "Short Long Run",
+            "distance": "10 km",
+            "pace": "5:20-5:30/km",
+            "hr": "Zone 2",
+            "duration": "55 min",
+            "desc": "Easy effort. Resist the urge to run fast!"
+          }
+        ]
+      },
+      {
+        "week": 12,
+        "phase": "Race Week",
+        "phaseClass": "phase-4",
+        "description": "Race week! Almost all work is done. Eat well, sleep well, and trust your training.",
+        "workouts": [
+          {
+            "day": "Monday",
+            "type": "easy",
+            "title": "Easy Aerobic Run",
+            "distance": "7 km",
+            "pace": "5:30-5:45/km",
+            "hr": "Zone 2",
+            "duration": "40 min",
+            "desc": "Your final Monday shakeout. Keep it incredibly light."
+          },
+          {
+            "day": "Tuesday",
+            "type": "easy",
+            "title": "Shakeout & Strides",
+            "distance": "5 km",
+            "pace": "5:30/km",
+            "hr": "Zone 2",
+            "duration": "30 min",
+            "desc": "Easy 20 min jog followed by 4x 20-second |strides| to loosen up."
+          },
+          {
+            "day": "Thursday",
+            "type": "easy",
+            "title": "Pre-Race Jog",
+            "distance": "4 km",
+            "pace": "5:45/km",
+            "hr": "Zone 2",
+            "duration": "25 min",
+            "desc": "A very gentle run to calm the nerves and keep the muscles supple."
+          },
+          {
+            "day": "Friday",
+            "type": "rest",
+            "title": "Rest",
+            "distance": "0 km",
+            "pace": "N/A",
+            "hr": "N/A",
+            "duration": "0 min",
+            "desc": "Complete rest. Hydrate and eat easily digestible carbs."
+          },
+          {
+            "day": "Sunday",
+            "type": "race",
+            "title": "HALF MARATHON RACE",
+            "distance": "21.1 km",
+            "pace": "4:58/km",
+            "hr": "Zone 3-4",
+            "duration": "105 min",
+            "desc": "Race day! Stick to your 4:58/km pace early on. Do not start too fast! Have a fantastic run!"
+          }
+        ]
+      }
+    ]
+  },
+  "lastPromptDate": null,
+  "specialInformation": "Your goal of 1:45:00 (4:58/km pace) is absolutely realistic and you are in a fantastic position to achieve it! Since you can already hold a 5:00/km pace for 15km, your fitness level is arguably already there for the Half Marathon distance. A quick note on your heart rate: if you feel you can hold Zone 4 for 1.5 hours and Zone 3 for 5 hours, your watch's max heart rate is set too low. As a 15-year-old, your actual max HR is likely much higher than the standard formulas suggest, meaning your perceived 'Zone 4' is probably truly your Zone 3. To match your schedule constraints, I have strictly limited the plan to 4 workouts per week, giving you Monday, Wednesday, and Saturday completely off. Let's fine-tune your endurance and get you to the starting line fresh!",
+  "weeks": [
+    {
+      "week": 1,
+      "phase": "Aerobic Base & Speed Efficiency",
+      "phaseClass": "phase-1",
+      "description": "Week 1 focuses on establishing our 4-day rhythm and reinforcing your already strong base. We will introduce some light speed work.",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "interval",
+          "title": "Speed Reps",
+          "distance": "6 km",
+          "pace": "4:30/km for intervals",
+          "hr": "Zone 4",
+          "duration": "40 min",
+          "desc": "Start with a 15 min |warm-up| jog. Then run 6x 400m at 4:30/km pace with 90 seconds walking recovery. Finish with a 10 min |cool-down|."
+        },
+        {
+          "day": "Thursday",
+          "type": "easy",
+          "title": "Easy Aerobic Run",
+          "distance": "6 km",
+          "pace": "5:30-5:45/km",
+          "hr": "Zone 2",
+          "duration": "35 min",
+          "desc": "A comfortable, conversational run to promote recovery. Focus on relaxed breathing and a smooth |running cadence|."
+        },
+        {
+          "day": "Friday",
+          "type": "tempo",
+          "title": "Target Pace Introduction",
+          "distance": "7 km",
+          "pace": "4:55/km",
+          "hr": "Zone 3",
+          "duration": "40 min",
+          "desc": "15 min easy |warm-up|, then 4 km continuous at your goal Half Marathon pace (4:55/km). Finish with a 10 min |cool-down|."
+        },
+        {
+          "day": "Sunday",
+          "type": "long",
+          "title": "Weekend Long Run",
+          "distance": "12 km",
+          "pace": "5:20-5:30/km",
+          "hr": "Zone 2",
+          "duration": "65 min",
+          "desc": "A steady, relaxed |long run|. Since you can handle 15km easily, use this to practice pacing discipline and fueling."
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "phase": "Aerobic Base & Speed Efficiency",
+      "phaseClass": "phase-1",
+      "description": "Building slightly on the interval volume while keeping the weekend endurance run comfortable.",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "interval",
+          "title": "Speed Reps",
+          "distance": "7 km",
+          "pace": "4:30/km for intervals",
+          "hr": "Zone 4",
+          "duration": "45 min",
+          "desc": "15 min |warm-up|. Run 8x 400m at 4:30/km with 90s recovery. Finish with a 10 min |cool-down|."
+        },
+        {
+          "day": "Thursday",
+          "type": "easy",
+          "title": "Easy Aerobic Run",
+          "distance": "7 km",
+          "pace": "5:30-5:45/km",
+          "hr": "Zone 2",
+          "duration": "40 min",
+          "desc": "Keep it easy and relaxed. Include some light |dynamic stretching| before starting."
+        },
+        {
+          "day": "Friday",
+          "type": "tempo",
+          "title": "HM Pace Tempo",
+          "distance": "8 km",
+          "pace": "4:55/km",
+          "hr": "Zone 3",
+          "duration": "45 min",
+          "desc": "15 min |warm-up|, then 5 km at goal HM pace. Finish with a 10 min |cool-down|."
+        },
+        {
+          "day": "Sunday",
+          "type": "long",
+          "title": "Weekend Long Run",
+          "distance": "14 km",
+          "pace": "5:20-5:30/km",
+          "hr": "Zone 2",
+          "duration": "75 min",
+          "desc": "Steady effort. Practice taking in some water and energy halfway through to train your stomach."
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "phase": "Aerobic Base & Speed Efficiency",
+      "phaseClass": "phase-1",
+      "description": "Increasing interval length to build speed endurance, leading into a 15km long run which you are already familiar with.",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "interval",
+          "title": "Longer Intervals",
+          "distance": "8 km",
+          "pace": "4:40/km for intervals",
+          "hr": "Zone 4",
+          "duration": "50 min",
+          "desc": "15 min |warm-up|. Run 5x 800m at 4:40/km with 2 minutes jogging recovery. 10 min |cool-down|."
+        },
+        {
+          "day": "Thursday",
+          "type": "easy",
+          "title": "Easy Aerobic Run",
+          "distance": "7 km",
+          "pace": "5:30-5:45/km",
+          "hr": "Zone 2",
+          "duration": "40 min",
+          "desc": "Focus on recovery after Tuesday's intervals. Keep the pace conversational."
+        },
+        {
+          "day": "Friday",
+          "type": "tempo",
+          "title": "HM Pace Tempo",
+          "distance": "9 km",
+          "pace": "4:55/km",
+          "hr": "Zone 3",
+          "duration": "50 min",
+          "desc": "15 min |warm-up|. 6 km continuous at goal HM pace (4:55). 10 min |cool-down|."
+        },
+        {
+          "day": "Sunday",
+          "type": "long",
+          "title": "Weekend Long Run",
+          "distance": "15 km",
+          "pace": "5:20-5:30/km",
+          "hr": "Zone 2",
+          "duration": "82 min",
+          "desc": "You know you can hit this distance and pace easily! Keep it disciplined and steady."
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "phase": "Recovery & Adapt",
+      "phaseClass": "phase-1",
+      "description": "A deliberate step back in volume to allow your muscles to absorb the training and prevent injury.",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "interval",
+          "title": "Light Speed Reps",
+          "distance": "6 km",
+          "pace": "4:30/km for intervals",
+          "hr": "Zone 4",
+          "duration": "35 min",
+          "desc": "10 min |warm-up|. Just 4x 400m at 4:30/km to keep the legs snappy. 90s recovery. 10 min |cool-down|."
+        },
+        {
+          "day": "Thursday",
+          "type": "easy",
+          "title": "Easy Aerobic Run",
+          "distance": "5 km",
+          "pace": "5:30-5:45/km",
+          "hr": "Zone 2",
+          "duration": "30 min",
+          "desc": "Very gentle recovery run."
+        },
+        {
+          "day": "Friday",
+          "type": "easy",
+          "title": "Easy Strides",
+          "distance": "6 km",
+          "pace": "5:30/km",
+          "hr": "Zone 2",
+          "duration": "35 min",
+          "desc": "Easy run, but include 4x 20-second |strides| at the end to work on form."
+        },
+        {
+          "day": "Sunday",
+          "type": "long",
+          "title": "Reduced Long Run",
+          "distance": "10 km",
+          "pace": "5:20-5:30/km",
+          "hr": "Zone 2",
+          "duration": "55 min",
+          "desc": "A shorter effort this weekend. Enjoy the lighter load and stay relaxed."
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "phase": "Specific Endurance & Threshold",
+      "phaseClass": "phase-2",
+      "description": "Moving into phase 2, we introduce longer intervals and break new ground on the long run distance.",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "interval",
+          "title": "800m Repeats",
+          "distance": "9 km",
+          "pace": "4:40/km",
+          "hr": "Zone 4",
+          "duration": "55 min",
+          "desc": "15 min |warm-up|. 6x 800m at 4:40/km with 90s walk/jog recovery. 10 min |cool-down|."
+        },
+        {
+          "day": "Thursday",
+          "type": "easy",
+          "title": "Easy Aerobic Run",
+          "distance": "8 km",
+          "pace": "5:30-5:45/km",
+          "hr": "Zone 2",
+          "duration": "45 min",
+          "desc": "Nice and relaxed. Let your legs recover from the intervals."
+        },
+        {
+          "day": "Friday",
+          "type": "tempo",
+          "title": "Broken Tempo",
+          "distance": "9 km",
+          "pace": "4:50/km",
+          "hr": "Zone 3",
+          "duration": "50 min",
+          "desc": "15 min |warm-up|. 2x 3km at a slightly faster 4:50/km pace. Take 3 minutes of easy jogging between the 3km blocks. 10 min |cool-down|."
+        },
+        {
+          "day": "Sunday",
+          "type": "long",
+          "title": "Weekend Long Run",
+          "distance": "16 km",
+          "pace": "5:20-5:30/km",
+          "hr": "Zone 2",
+          "duration": "90 min",
+          "desc": "New distance territory! Keep it smooth and remember to fuel with a gel or sports drink."
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "phase": "Specific Endurance & Threshold",
+      "phaseClass": "phase-2",
+      "description": "Increasing the intensity slightly. You are building exceptional stamina for your goal pace.",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "interval",
+          "title": "Kilometer Repeats",
+          "distance": "9 km",
+          "pace": "4:40/km",
+          "hr": "Zone 4",
+          "duration": "55 min",
+          "desc": "15 min |warm-up|. 4x 1000m at 4:40/km with 2 min jogging recovery. 10 min |cool-down|."
+        },
+        {
+          "day": "Thursday",
+          "type": "easy",
+          "title": "Easy Aerobic Run",
+          "distance": "8 km",
+          "pace": "5:30-5:45/km",
+          "hr": "Zone 2",
+          "duration": "45 min",
+          "desc": "Standard easy run. Shake out any stiffness."
+        },
+        {
+          "day": "Friday",
+          "type": "tempo",
+          "title": "Steady HM Pace",
+          "distance": "10 km",
+          "pace": "4:55/km",
+          "hr": "Zone 3",
+          "duration": "55 min",
+          "desc": "15 min |warm-up|. 7 km continuous at goal HM pace. 10 min |cool-down|."
+        },
+        {
+          "day": "Sunday",
+          "type": "long",
+          "title": "Weekend Long Run",
+          "distance": "18 km",
+          "pace": "5:20-5:30/km",
+          "hr": "Zone 2",
+          "duration": "100 min",
+          "desc": "A solid effort today. Don't worry about the pace being fast; just get the time on your feet."
+        }
+      ]
+    },
+    {
+      "week": 7,
+      "phase": "Specific Endurance & Threshold",
+      "phaseClass": "phase-2",
+      "description": "Our biggest training week before a planned drop-back. Keep focusing on good sleep and nutrition.",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "interval",
+          "title": "Kilometer Repeats",
+          "distance": "10 km",
+          "pace": "4:40/km",
+          "hr": "Zone 4",
+          "duration": "60 min",
+          "desc": "15 min |warm-up|. 5x 1000m at 4:40/km with 2 min jogging recovery. 10 min |cool-down|."
+        },
+        {
+          "day": "Thursday",
+          "type": "easy",
+          "title": "Easy Aerobic Run",
+          "distance": "8 km",
+          "pace": "5:30-5:45/km",
+          "hr": "Zone 2",
+          "duration": "45 min",
+          "desc": "Gentle miles."
+        },
+        {
+          "day": "Friday",
+          "type": "tempo",
+          "title": "Steady HM Pace",
+          "distance": "11 km",
+          "pace": "4:55/km",
+          "hr": "Zone 3",
+          "duration": "60 min",
+          "desc": "15 min |warm-up|. 8 km continuous at goal HM pace. This should feel manageable but requires focus. 10 min |cool-down|."
+        },
+        {
+          "day": "Sunday",
+          "type": "long",
+          "title": "Weekend Long Run",
+          "distance": "19 km",
+          "pace": "5:20-5:30/km",
+          "hr": "Zone 2",
+          "duration": "105 min",
+          "desc": "Your longest run of the plan. Treat this like a dress rehearsal for race day in terms of breakfast and gear."
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "phase": "Recovery & Adapt",
+      "phaseClass": "phase-2",
+      "description": "A well-earned recovery week to let the fitness gains fully settle in.",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "easy",
+          "title": "Easy Base",
+          "distance": "6 km",
+          "pace": "5:30/km",
+          "hr": "Zone 2",
+          "duration": "35 min",
+          "desc": "No intervals today. Just a smooth easy run to keep the blood flowing."
+        },
+        {
+          "day": "Thursday",
+          "type": "easy",
+          "title": "Easy Base",
+          "distance": "6 km",
+          "pace": "5:30-5:45/km",
+          "hr": "Zone 2",
+          "duration": "35 min",
+          "desc": "Another relaxed effort. Add some |dynamic stretching|."
+        },
+        {
+          "day": "Friday",
+          "type": "tempo",
+          "title": "Short Tempo",
+          "distance": "7 km",
+          "pace": "4:55/km",
+          "hr": "Zone 3",
+          "duration": "40 min",
+          "desc": "15 min |warm-up|, just 4 km at HM pace to stay familiar with it, then 10 min |cool-down|."
+        },
+        {
+          "day": "Sunday",
+          "type": "long",
+          "title": "Reduced Long Run",
+          "distance": "12 km",
+          "pace": "5:20-5:30/km",
+          "hr": "Zone 2",
+          "duration": "65 min",
+          "desc": "Keep it relaxed. You'll feel very fresh on this run!"
+        }
+      ]
+    },
+    {
+      "week": 9,
+      "phase": "Race Prep & Peak",
+      "phaseClass": "phase-3",
+      "description": "Entering the peaking phase. The volume is high, but the focus is specifically on race-day simulation.",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "interval",
+          "title": "Speed Endurance",
+          "distance": "10 km",
+          "pace": "4:40/km",
+          "hr": "Zone 4",
+          "duration": "60 min",
+          "desc": "15 min |warm-up|. 3x 1600m (1 mile) at 4:40/km with 2.5 minutes easy jogging recovery. 10 min |cool-down|."
+        },
+        {
+          "day": "Thursday",
+          "type": "easy",
+          "title": "Easy Aerobic Run",
+          "distance": "8 km",
+          "pace": "5:30-5:45/km",
+          "hr": "Zone 2",
+          "duration": "45 min",
+          "desc": "Flush the legs out."
+        },
+        {
+          "day": "Friday",
+          "type": "tempo",
+          "title": "Broken Tempo",
+          "distance": "11 km",
+          "pace": "4:50/km",
+          "hr": "Zone 3",
+          "duration": "60 min",
+          "desc": "15 min |warm-up|. 2x 4km at 4:50/km with 3 mins jogging recovery in between. 10 min |cool-down|."
+        },
+        {
+          "day": "Sunday",
+          "type": "long",
+          "title": "Long Run + Race Pace",
+          "distance": "18 km",
+          "pace": "Varies",
+          "hr": "Zone 2/3",
+          "duration": "95 min",
+          "desc": "Run the first 14 km at 5:30/km easy pace. For the final 4 km, drop down to your 4:58/km race pace to practice finishing strong."
+        }
+      ]
+    },
+    {
+      "week": 10,
+      "phase": "Race Prep & Peak",
+      "phaseClass": "phase-3",
+      "description": "The final hard week. We will sharpen the speed and do one last confidence-building long tempo.",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "interval",
+          "title": "Speed Endurance",
+          "distance": "9 km",
+          "pace": "4:40/km",
+          "hr": "Zone 4",
+          "duration": "55 min",
+          "desc": "15 min |warm-up|. 4x 1200m at 4:40/km with 2 min jogging recovery. 10 min |cool-down|."
+        },
+        {
+          "day": "Thursday",
+          "type": "easy",
+          "title": "Easy Aerobic Run",
+          "distance": "7 km",
+          "pace": "5:30-5:45/km",
+          "hr": "Zone 2",
+          "duration": "40 min",
+          "desc": "Keep it light and easy."
+        },
+        {
+          "day": "Friday",
+          "type": "tempo",
+          "title": "Final Big Tempo",
+          "distance": "11 km",
+          "pace": "4:55/km",
+          "hr": "Zone 3",
+          "duration": "60 min",
+          "desc": "15 min |warm-up|. 8 km continuous at goal HM pace. Trust your fitness, this is your groove! 10 min |cool-down|."
+        },
+        {
+          "day": "Sunday",
+          "type": "long",
+          "title": "Weekend Long Run",
+          "distance": "16 km",
+          "pace": "5:20-5:30/km",
+          "hr": "Zone 2",
+          "duration": "88 min",
+          "desc": "Dialing the distance back just slightly to start shedding fatigue."
+        }
+      ]
+    },
+    {
+      "week": 11,
+      "phase": "Taper",
+      "phaseClass": "phase-4",
+      "description": "Taper time! We are reducing volume significantly so you arrive on race day with completely fresh legs.",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "interval",
+          "title": "Sharpener",
+          "distance": "7 km",
+          "pace": "4:40/km",
+          "hr": "Zone 4",
+          "duration": "40 min",
+          "desc": "15 min |warm-up|. 5x 400m at 4:40/km with 90s jog recovery. 10 min |cool-down|. Do not push the pace, just keep legs active."
+        },
+        {
+          "day": "Thursday",
+          "type": "easy",
+          "title": "Easy Aerobic Run",
+          "distance": "6 km",
+          "pace": "5:30-5:45/km",
+          "hr": "Zone 2",
+          "duration": "35 min",
+          "desc": "Very easy jogging."
+        },
+        {
+          "day": "Friday",
+          "type": "tempo",
+          "title": "Pace Reminder",
+          "distance": "6 km",
+          "pace": "4:55/km",
+          "hr": "Zone 3",
+          "duration": "35 min",
+          "desc": "10 min |warm-up|. 3 km at HM pace. 10 min |cool-down|. Just a light touch of speed."
+        },
+        {
+          "day": "Sunday",
+          "type": "long",
+          "title": "Short Long Run",
+          "distance": "10 km",
+          "pace": "5:20-5:30/km",
+          "hr": "Zone 2",
+          "duration": "55 min",
+          "desc": "Easy effort. Resist the urge to run fast!"
+        }
+      ]
+    },
+    {
+      "week": 12,
+      "phase": "Race Week",
+      "phaseClass": "phase-4",
+      "description": "Race week! Almost all work is done. Eat well, sleep well, and trust your training.",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "easy",
+          "title": "Shakeout & Strides",
+          "distance": "5 km",
+          "pace": "5:30/km",
+          "hr": "Zone 2",
+          "duration": "30 min",
+          "desc": "Easy 20 min jog followed by 4x 20-second |strides| to loosen up."
+        },
+        {
+          "day": "Thursday",
+          "type": "easy",
+          "title": "Pre-Race Jog",
+          "distance": "4 km",
+          "pace": "5:45/km",
+          "hr": "Zone 2",
+          "duration": "25 min",
+          "desc": "A very gentle run to calm the nerves and keep the muscles supple."
+        },
+        {
+          "day": "Friday",
+          "type": "rest",
+          "title": "Rest",
+          "distance": "0 km",
+          "pace": "N/A",
+          "hr": "N/A",
+          "duration": "0 min",
+          "desc": "Complete rest. Hydrate and eat easily digestible carbs."
+        },
+        {
+          "day": "Sunday",
+          "type": "race",
+          "title": "HALF MARATHON RACE",
+          "distance": "21.1 km",
+          "pace": "4:58/km",
+          "hr": "Zone 3-4",
+          "duration": "105 min",
+          "desc": "Race day! Stick to your 4:58/km pace early on. Do not start too fast! Have a fantastic run!"
+        }
+      ]
+    }
+  ]
+}
