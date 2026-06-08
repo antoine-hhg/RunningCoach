@@ -1,0 +1,2209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RunTracker Pro – Half Marathon 1:45 Plan</title>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #22223a;
+            --accent: #00d4aa;
+            --accent-dim: #00d4aa33;
+            --accent-bright: #00ffc8;
+            --warning: #ff6b6b;
+            --warning-dim: #ff6b6b22;
+            --blue: #4dabf7;
+            --blue-dim: #4dabf722;
+            --purple: #b197fc;
+            --purple-dim: #b197fc22;
+            --orange: #ffa94d;
+            --orange-dim: #ffa94d22;
+            --yellow: #ffd43b;
+            --text-primary: #e8e8f0;
+            --text-secondary: #8888a0;
+            --text-dim: #555570;
+            --border: #2a2a40;
+            --border-light: #3a3a55;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.4);
+            --transition: all 0.25s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-primary);
+            padding: 4px;
+            border-radius: var(--radius);
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-btn.active {
+            background: var(--accent);
+            color: var(--bg-primary);
+            font-weight: 600;
+        }
+
+        .nav-btn:hover:not(.active) {
+            color: var(--text-primary);
+            background: var(--bg-card);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            border-color: var(--accent);
+            background: var(--bg-card-hover);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+            font-weight: 600;
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-bright);
+            border-color: var(--accent-bright);
+        }
+
+        .btn-warning {
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        /* Main Layout */
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Dashboard Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            border-color: var(--border-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-sub {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        /* Progress Bar */
+        .progress-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .progress-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .progress-pct {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .progress-bar-bg {
+            height: 8px;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Training Plan */
+        .week-selector {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .week-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .week-btn.active {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+            font-weight: 600;
+        }
+
+        .week-btn.completed {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .workout-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 12px;
+            transition: var(--transition);
+        }
+
+        .workout-card:hover {
+            border-color: var(--border-light);
+        }
+
+        .workout-card.completed {
+            border-left: 3px solid var(--accent);
+            opacity: 0.7;
+        }
+
+        .workout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .workout-day {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .workout-type {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .type-easy { background: var(--accent-dim); color: var(--accent); }
+        .type-tempo { background: var(--orange-dim); color: var(--orange); }
+        .type-interval { background: var(--warning-dim); color: var(--warning); }
+        .type-long { background: var(--blue-dim); color: var(--blue); }
+        .type-race { background: var(--purple-dim); color: var(--purple); }
+        .type-rest { background: var(--bg-primary); color: var(--text-dim); }
+
+        .workout-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .workout-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .workout-metrics {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .workout-metric {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        .workout-metric span {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .workout-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        /* Log Run Form */
+        .form-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px 14px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-dim);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .hr-zones-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .zone-input {
+            text-align: center;
+        }
+
+        .zone-label {
+            font-size: 10px !important;
+            text-align: center;
+        }
+
+        /* Run History */
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .history-table th {
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+        }
+
+        .history-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .history-table tr:hover td {
+            background: var(--bg-card-hover);
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .delete-btn:hover {
+            color: var(--warning);
+            background: var(--warning-dim);
+        }
+
+        /* Exercise Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: var(--accent);
+        }
+
+        .modal h3 {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .modal p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .modal strong {
+            color: var(--text-primary);
+        }
+
+        .modal ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .modal li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Exercise term highlighting */
+        .exercise-term {
+            color: var(--accent);
+            cursor: pointer;
+            border-bottom: 1px dashed var(--accent);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .exercise-term:hover {
+            color: var(--accent-bright);
+            border-bottom-style: solid;
+        }
+
+        /* Prompt Generator */
+        .prompt-box {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 12px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 500px;
+            overflow-y: auto;
+            margin-top: 16px;
+        }
+
+        /* Charts */
+        .chart-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            height: 200px;
+            padding-top: 20px;
+        }
+
+        .bar-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+        }
+
+        .bar {
+            width: 100%;
+            max-width: 40px;
+            background: linear-gradient(180deg, var(--accent), var(--accent-dim));
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s ease;
+            min-height: 4px;
+        }
+
+        .bar-label {
+            font-size: 10px;
+            color: var(--text-dim);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .bar-value {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        /* Two column layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        /* Rules Section */
+        .rules-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 12px;
+        }
+
+        .rule-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+
+        .rule-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .rule-text strong {
+            color: var(--text-primary);
+        }
+
+        /* Weekly Reminder Badge */
+        .reminder-badge {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 212, 170, 0.3);
+            transition: var(--transition);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reminder-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 212, 170, 0.4);
+        }
+
+        .reminder-badge.hidden {
+            display: none;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            right: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
+            color: var(--text-primary);
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            z-index: 200;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Section title */
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* Phase badge */
+        .phase-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .phase-1 { background: var(--accent-dim); color: var(--accent); }
+        .phase-2 { background: var(--blue-dim); color: var(--blue); }
+        .phase-3 { background: var(--orange-dim); color: var(--orange); }
+        .phase-4 { background: var(--purple-dim); color: var(--purple); }
+
+        /* Import area */
+        .import-area {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 24px;
+        }
+
+        .import-area:hover {
+            border-color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px 16px;
+            }
+
+            .nav {
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .main {
+                padding: 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .hr-zones-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .workout-metrics {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .bar-chart {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🏃</div>
+            RunTracker Pro
+        </div>
+        <nav class="nav">
+            <button class="nav-btn active" onclick="showPage('dashboard')">Dashboard</button>
+            <button class="nav-btn" onclick="showPage('plan')">Training Plan</button>
+            <button class="nav-btn" onclick="showPage('log')">Log Run</button>
+            <button class="nav-btn" onclick="showPage('history')">History</button>
+            <button class="nav-btn" onclick="showPage('prompt')">AI Update</button>
+        </nav>
+        <div class="header-actions">
+            <button class="btn" onclick="exportData()">📦 Export JSON</button>
+            <button class="btn" onclick="document.getElementById('importInput').click()">📥 Import</button>
+            <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)">
+        </div>
+    </header>
+
+    <!-- Dashboard Page -->
+    <main class="main">
+        <div id="page-dashboard" class="page active">
+            <h1 class="section-title">Dashboard</h1>
+            <p class="section-subtitle">Half Marathon Target: 1:45:00 · Current training overview</p>
+
+            <div class="stats-grid" id="dashboardStats">
+                <!-- Filled by JS -->
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-header">
+                    <span class="progress-title">Training Plan Progress</span>
+                    <span class="progress-pct" id="progressPct">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+                <div class="progress-details">
+                    <span id="progressWeek">Week 0 of 12</span>
+                    <span id="progressWorkouts">0 workouts completed</span>
+                </div>
+            </div>
+
+            <div class="two-col">
+                <div class="chart-container">
+                    <div class="chart-title">Weekly Distance (km)</div>
+                    <div class="bar-chart" id="distanceChart"></div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">Average Pace Trend (min/km)</div>
+                    <div class="bar-chart" id="paceChart"></div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Average Heart Rate Trend</div>
+                <div class="bar-chart" id="hrChart"></div>
+            </div>
+
+            <h2 style="font-size:18px; margin-bottom:16px; margin-top:8px;">Non-Negotiable Rules</h2>
+            <div class="rules-card">
+                <span class="rule-number">1</span>
+                <span class="rule-text"><strong>SLOW DOWN on easy days.</strong> If you can't hold a conversation, you're going too fast. 80% easy / 20% hard.</span>
+            </div>
+            <div class="rules-card">
+                <span class="rule-number">2</span>
+                <span class="rule-text"><strong>Never increase weekly mileage by more than 10%.</strong></span>
+            </div>
+            <div class="rules-card">
+                <span class="rule-number">3</span>
+                <span class="rule-text"><strong>Sleep 8-9 hours minimum.</strong> Growth hormone peaks during sleep.</span>
+            </div>
+            <div class="rules-card">
+                <span class="rule-number">4</span>
+                <span class="rule-text"><strong>If something hurts for more than 2 days, REST.</strong> No exceptions.</span>
+            </div>
+            <div class="rules-card">
+                <span class="rule-number">5</span>
+                <span class="rule-text"><strong>Eat enough.</strong> You're growing AND training. Don't under-fuel.</span>
+            </div>
+            <div class="rules-card">
+                <span class="rule-number">6</span>
+                <span class="rule-text"><strong>Take deload weeks seriously</strong> – they're where the magic happens.</span>
+            </div>
+        </div>
+
+        <!-- Training Plan Page -->
+        <div id="page-plan" class="page">
+            <h1 class="section-title">12-Week Training Plan</h1>
+            <p class="section-subtitle">Target: Half Marathon in 1:45:00 · Goal Pace: 4:58/km</p>
+
+            <div class="week-selector" id="weekSelector"></div>
+
+            <div id="weekPhase"></div>
+            <div id="weekWorkouts"></div>
+        </div>
+
+        <!-- Log Run Page -->
+        <div id="page-log" class="page">
+            <h1 class="section-title">Log a Run</h1>
+            <p class="section-subtitle">Record your training data for tracking and AI analysis</p>
+
+            <div class="form-section">
+                <div class="form-title">🏃 Run Details</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="logDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Workout Type</label>
+                        <select id="logType">
+                            <option value="easy">Easy Run</option>
+                            <option value="tempo">Tempo Run</option>
+                            <option value="interval">Intervals</option>
+                            <option value="long">Long Run</option>
+                            <option value="race">Race Pace</option>
+                            <option value="strides">Strides + Easy</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Distance (km)</label>
+                        <input type="number" id="logDistance" step="0.01" placeholder="15.88">
+                    </div>
+                    <div class="form-group">
+                        <label>Duration (minutes)</label>
+                        <input type="number" id="logDuration" step="1" placeholder="87">
+                    </div>
+                    <div class="form-group">
+                        <label>Avg Pace (min/km)</label>
+                        <input type="text" id="logPace" placeholder="5:30">
+                    </div>
+                    <div class="form-group">
+                        <label>Avg Heart Rate (bpm)</label>
+                        <input type="number" id="logHR" placeholder="155">
+                    </div>
+                    <div class="form-group">
+                        <label>Max Heart Rate (bpm)</label>
+                        <input type="number" id="logMaxHR" placeholder="185">
+                    </div>
+                    <div class="form-group">
+                        <label>Estimated VO2max</label>
+                        <input type="number" id="logVO2" step="0.1" placeholder="48">
+                    </div>
+                    <div class="form-group">
+                        <label>Sweat Loss (liters)</label>
+                        <input type="number" id="logSweat" step="0.1" placeholder="1.2">
+                    </div>
+                    <div class="form-group">
+                        <label>Perceived Effort (1-10)</label>
+                        <input type="number" id="logRPE" min="1" max="10" placeholder="7">
+                    </div>
+                    <div class="form-group">
+                        <label>Cadence (spm)</label>
+                        <input type="number" id="logCadence" placeholder="170">
+                    </div>
+                    <div class="form-group">
+                        <label>Elevation Gain (m)</label>
+                        <input type="number" id="logElevation" placeholder="120">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-title">❤️ Heart Rate Zones (minutes in each)</div>
+                <div class="hr-zones-grid">
+                    <div class="form-group">
+                        <label class="zone-label">Zone 1 (&lt;125)</label>
+                        <input type="number" id="logZ1" step="0.5" placeholder="2" class="zone-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="zone-label">Zone 2 (125-145)</label>
+                        <input type="number" id="logZ2" step="0.5" placeholder="10" class="zone-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="zone-label">Zone 3 (145-160)</label>
+                        <input type="number" id="logZ3" step="0.5" placeholder="18" class="zone-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="zone-label">Zone 4 (160-175)</label>
+                        <input type="number" id="logZ4" step="0.5" placeholder="32" class="zone-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="zone-label">Zone 5 (175+)</label>
+                        <input type="number" id="logZ5" step="0.5" placeholder="21" class="zone-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-title">📝 Additional Notes</div>
+                <div class="form-group">
+                    <label>How did you feel? Any pain? Weather conditions?</label>
+                    <textarea id="logNotes" placeholder="Felt strong first 10km, legs got heavy after. Slight tightness in left knee. 15°C, slight wind."></textarea>
+                </div>
+                <div class="form-group" style="margin-top:12px">
+                    <label>Sleep Hours Last Night</label>
+                    <input type="number" id="logSleep" step="0.5" placeholder="8" style="max-width:200px">
+                </div>
+                <div class="form-group" style="margin-top:12px">
+                    <label>Weight (kg) – optional</label>
+                    <input type="number" id="logWeight" step="0.1" placeholder="55" style="max-width:200px">
+                </div>
+            </div>
+
+            <div style="display:flex; gap:12px; margin-top:8px;">
+                <button class="btn btn-accent" onclick="saveRun()" style="padding:12px 32px; font-size:15px;">✅ Save Run</button>
+                <button class="btn" onclick="clearForm()">🗑️ Clear Form</button>
+            </div>
+        </div>
+
+        <!-- History Page -->
+        <div id="page-history" class="page">
+            <h1 class="section-title">Run History</h1>
+            <p class="section-subtitle">All logged training sessions</p>
+
+            <div style="overflow-x:auto;">
+                <table class="history-table" id="historyTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Distance</th>
+                            <th>Duration</th>
+                            <th>Pace</th>
+                            <th>Avg HR</th>
+                            <th>VO2max</th>
+                            <th>RPE</th>
+                            <th>Z4+Z5%</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyBody"></tbody>
+                </table>
+            </div>
+            <p id="noHistory" style="text-align:center; color:var(--text-dim); padding:40px; display:none;">No runs logged yet. Start tracking!</p>
+        </div>
+
+        <!-- AI Update / Prompt Page -->
+        <div id="page-prompt" class="page">
+            <h1 class="section-title">AI Plan Update</h1>
+            <p class="section-subtitle">Generate a personalized prompt based on your data to update your training plan weekly</p>
+
+            <div class="form-section" style="border-color: var(--accent); border-width:2px;">
+                <div class="form-title">⚡ Weekly AI Update Prompt</div>
+                <p style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;">
+                    Click "Generate Prompt" below. Copy the result and paste it into ChatGPT / Claude. 
+                    The AI response will give you an updated plan. Then paste the AI's updated HTML back here (or manually adjust your plan).
+                </p>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button class="btn btn-accent" onclick="generatePrompt()">🤖 Generate Prompt</button>
+                    <button class="btn" onclick="copyPrompt()">📋 Copy to Clipboard</button>
+                </div>
+                <div class="prompt-box" id="promptOutput">Click "Generate Prompt" to create your personalized AI update prompt...</div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-title">📥 Apply AI Response</div>
+                <p style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;">
+                    After getting your AI response, if it includes updated plan JSON, paste it below to update your training plan.
+                </p>
+                <div class="form-group">
+                    <label>Paste AI-generated plan JSON here</label>
+                    <textarea id="aiPlanInput" placeholder='Paste the JSON training plan from the AI response here...' style="min-height:150px; font-family: monospace; font-size:12px;"></textarea>
+                </div>
+                <button class="btn btn-accent" onclick="applyAIPlan()" style="margin-top:12px;">✅ Apply Updated Plan</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Exercise Info Modal -->
+    <div class="modal-overlay" id="exerciseModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2 id="modalTitle">Exercise Name</h2>
+            <h3 id="modalCategory">Category</h3>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Weekly Reminder -->
+    <div class="reminder-badge" id="weeklyReminder" onclick="showPage('prompt')">
+        🔔 Weekly Plan Update Due
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ==================== DATA STORE ====================
+        const DEFAULT_DATA = {
+            profile: {
+                age: 15,
+                targetTime: "1:45:00",
+                targetPace: "4:58",
+                currentVO2max: 48,
+                currentPace: "5:30",
+                sweatRate: 1.2,
+                raceDate: "",
+                planStartDate: "",
+                currentWeek: 1
+            },
+            runs: [],
+            completedWorkouts: {},
+            plan: null,
+            lastPromptDate: null
+        };
+
+        let appData = loadData();
+
+        function loadData() {
+            const saved = localStorage.getItem('runtracker_data');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    return { ...DEFAULT_DATA, ...parsed };
+                } catch(e) {
+                    return { ...DEFAULT_DATA };
+                }
+            }
+            return { ...DEFAULT_DATA };
+        }
+
+        function saveData() {
+            localStorage.setItem('runtracker_data', JSON.stringify(appData));
+        }
+
+        // ==================== EXERCISE DATABASE ====================
+        const exerciseDB = {
+            "easy run": {
+                category: "Aerobic / Base Building",
+                description: "A run performed at a comfortable, conversational pace. You should be able to hold a full conversation without gasping for air.",
+                purpose: "Builds aerobic base, increases mitochondrial density, improves fat oxidation, and aids recovery between hard sessions.",
+                execution: [
+                    "Run at Zone 2 heart rate (125-145 bpm for you)",
+                    "Pace should be 6:00-6:30/km — YES, this feels slow",
+                    "Breathing should be easy and rhythmic",
+                    "Focus on good form, not speed",
+                    "This is the foundation of ALL your training"
+                ],
+                keyTip: "If you feel like you're going too slow, you're probably at the right pace. 80% of elite marathon training is done at easy pace."
+            },
+            "tempo run": {
+                category: "Lactate Threshold Training",
+                description: "A sustained effort at 'comfortably hard' pace — faster than easy, but a pace you could hold for about 45-60 minutes in a race.",
+                purpose: "Raises your lactate threshold, meaning you can run faster before lactic acid builds up. Directly improves half marathon performance.",
+                execution: [
+                    "Warm up: 2km easy running",
+                    "Run the tempo portion at 5:10-5:20/km (Zone 3-4, HR 145-170)",
+                    "The effort should feel 'comfortably hard' — you can speak in short sentences but not paragraphs",
+                    "Cool down: 2km easy running",
+                    "Keep the pace STEADY — don't speed up and slow down"
+                ],
+                keyTip: "Tempo runs are the bread and butter of half marathon training. They teach your body to clear lactate efficiently."
+            },
+            "intervals": {
+                category: "VO2max / Speed Development",
+                description: "Alternating periods of hard running with recovery jogs. Typically 800m-1000m repeats at a pace faster than race pace.",
+                purpose: "Improves VO2max (your body's maximum oxygen uptake), running economy, and speed. Makes race pace feel easier.",
+                execution: [
+                    "Warm up: 2km easy + dynamic stretches",
+                    "Run each interval at target pace (e.g., 4:40-4:50/km for 1000m reps)",
+                    "Recovery: jog slowly for the prescribed time (90s-2min)",
+                    "Focus on consistent pace for EACH repeat — don't go too fast on #1",
+                    "Cool down: 2km easy running"
+                ],
+                keyTip: "The recovery jog is crucial — don't stand still, keep moving. And don't run the first rep faster than the last."
+            },
+            "long run": {
+                category: "Endurance Building",
+                description: "The longest run of your week, done at easy-to-moderate pace. Builds the endurance foundation for the half marathon.",
+                purpose: "Increases capillary density, strengthens slow-twitch muscle fibers, improves glycogen storage, teaches your body to burn fat as fuel, and builds mental toughness.",
+                execution: [
+                    "Run at 5:50-6:20/km pace (Zone 2, occasionally dipping into Zone 3)",
+                    "Start slower than you think you should",
+                    "Practice race-day hydration: drink every 20 minutes",
+                    "Build distance gradually: add no more than 1-2km per week",
+                    "If you feel good in the last 3km, you can pick up pace slightly (but don't have to)"
+                ],
+                keyTip: "The long run isn't about pace — it's about time on your feet. Slow down and enjoy it."
+            },
+            "strides": {
+                category: "Speed & Form Drill",
+                description: "Short accelerations of ~100m where you gradually build to about 90-95% sprint speed, then decelerate. NOT all-out sprints.",
+                purpose: "Improves running economy, neuromuscular coordination, and leg turnover without creating fatigue. Keeps your legs feeling 'snappy'.",
+                execution: [
+                    "Find a flat, straight stretch of ~100m",
+                    "Accelerate smoothly over the first 30m to near-top speed",
+                    "Hold that speed for 40m",
+                    "Decelerate smoothly over the last 30m",
+                    "Walk back to the start (full recovery: 60-90 seconds)",
+                    "Do 4-6 repetitions",
+                    "Focus on smooth, relaxed form — not straining"
+                ],
+                keyTip: "Strides should feel FAST but RELAXED. Think 'quick feet, tall posture, relaxed shoulders'. No clenching."
+            },
+            "race pace": {
+                category: "Race-Specific Training",
+                description: "Running at your target half marathon pace (4:58/km for a 1:45 finish). Teaches your body and mind what race day will feel like.",
+                purpose: "Calibrates your internal pace sense, builds confidence at goal pace, and develops race-specific fitness.",
+                execution: [
+                    "Warm up: 2km easy",
+                    "Run at exactly 4:58-5:05/km",
+                    "Use your watch to check pace every km — learn what this effort FEELS like",
+                    "Practice steady breathing at this pace",
+                    "Cool down: 2km easy"
+                ],
+                keyTip: "Race pace should feel 'manageable but purposeful'. Not easy, not hard. You should think 'I could keep this up for a while'."
+            },
+            "vo2max intervals": {
+                category: "Maximum Aerobic Power",
+                description: "High-intensity intervals (typically 800m) run at a pace that elicits near-maximum oxygen consumption. The hardest workout of the week.",
+                purpose: "Directly increases your VO2max ceiling, improves the heart's stroke volume, and increases oxygen delivery to muscles.",
+                execution: [
+                    "Warm up: 2km easy + 2-3 strides",
+                    "Run 800m repeats at 4:20-4:30/km (Zone 5, HR 175+)",
+                    "Recovery: 2 minutes easy jog between reps",
+                    "You should feel like you NEED the recovery — it should be genuinely hard",
+                    "Do 4-6 reps depending on fitness level",
+                    "Cool down: 2km very easy"
+                ],
+                keyTip: "These are HARD by design. Limit to once per week maximum. If you can't maintain pace on the last rep, you did too many or went too fast early."
+            },
+            "progressive run": {
+                category: "Aerobic Endurance / Pacing",
+                description: "A run that starts easy and gradually gets faster, finishing at tempo or race pace. Also called a 'negative split run'.",
+                purpose: "Teaches pacing discipline, simulates the feeling of finishing strong in a race, and builds both aerobic and lactate threshold fitness.",
+                execution: [
+                    "First third: Easy pace (6:00-6:20/km)",
+                    "Middle third: Moderate pace (5:30-5:40/km)",
+                    "Final third: Tempo to race pace (5:00-5:10/km)",
+                    "The transition should be GRADUAL, not sudden jumps",
+                    "You should finish feeling strong, not destroyed"
+                ],
+                keyTip: "The hardest part is being patient at the start. Trust the process — the fast finish will feel incredible."
+            },
+            "deload week": {
+                category: "Recovery & Adaptation",
+                description: "A planned week of reduced training volume (typically 25-30% less than normal). Usually every 3-4 weeks.",
+                purpose: "Allows your body to fully absorb and adapt to the training you've done. Repairs micro-damage in muscles, tendons, and bones. Prevents overtraining and injury.",
+                execution: [
+                    "Reduce all run distances by 25%",
+                    "Keep the same number of sessions",
+                    "Maintain easy pace — no hard workouts",
+                    "Focus on sleep, nutrition, and stretching",
+                    "You might feel sluggish at first — that's NORMAL, your body is healing"
+                ],
+                keyTip: "Elite runners say 'fitness is built during rest, not during training.' Deload weeks are NOT optional — they're where you get FASTER."
+            },
+            "warm-up": {
+                category: "Preparation",
+                description: "Easy running and movement before the main workout to prepare your body for harder effort.",
+                purpose: "Increases blood flow to muscles, raises core temperature, lubricates joints, and activates the nervous system. Reduces injury risk.",
+                execution: [
+                    "2km of very easy jogging (6:30-7:00/km)",
+                    "Leg swings (forward/backward, 10 each leg)",
+                    "Hip circles (10 each direction)",
+                    "High knees (20m)",
+                    "***** kicks (20m)",
+                    "2-3 strides if doing intervals/tempo"
+                ],
+                keyTip: "Never skip the warm-up before hard sessions. Your first km should always be the slowest."
+            },
+            "cool-down": {
+                category: "Recovery",
+                description: "Easy jogging after the main workout to gradually return your body to resting state.",
+                purpose: "Helps clear metabolic waste from muscles, gradually lowers heart rate, and begins the recovery process.",
+                execution: [
+                    "2km of very easy jogging (6:30-7:00/km)",
+                    "Walk for 2-3 minutes after stopping",
+                    "Light static stretching (hold each stretch 20-30 seconds)",
+                    "Focus on calves, quads, hamstrings, hip flexors"
+                ],
+                keyTip: "The cool-down is your first step of recovery. Don't just stop running and sit down."
+            },
+            "negative split": {
+                category: "Pacing Strategy",
+                description: "Running the second half of a race or run faster than the first half.",
+                purpose: "The most efficient and sustainable way to race. Prevents early burnout and allows you to finish strong.",
+                execution: [
+                    "Start 5-10 seconds per km SLOWER than goal pace",
+                    "Settle into goal pace after 3-5km",
+                    "Gradually increase effort in final third",
+                    "The last 2-3km should be your fastest",
+                    "Requires patience and discipline early on"
+                ],
+                keyTip: "Almost every world record in distance running has been set with a negative split. Be patient early, be strong late."
+            },
+            "single-leg calf raises": {
+                category: "Strength / Injury Prevention",
+                description: "Standing on one foot, rising up onto your toes and slowly lowering back down.",
+                purpose: "Strengthens the calf muscles and Achilles tendon — the most common injury site for young runners.",
+                execution: [
+                    "Stand on one foot on a step or flat ground",
+                    "Rise up onto your toes as high as possible",
+                    "Hold at the top for 1 second",
+                    "Lower slowly (3 seconds down)",
+                    "Do 3 sets of 15 reps per leg",
+                    "Add weight (holding a dumbbell) once bodyweight feels easy"
+                ],
+                keyTip: "The slow lowering (eccentric) phase is the most important part. Don't rush it."
+            },
+            "glute bridges": {
+                category: "Strength / Injury Prevention",
+                description: "Lying on your back with knees bent, lifting your hips up to create a straight line from shoulders to knees.",
+                purpose: "Activates and strengthens the glutes — the most powerful running muscles. Weak glutes are the #1 cause of knee and hip injuries in runners.",
+                execution: [
+                    "Lie on your back, knees bent, feet flat on floor",
+                    "Push through your heels to lift hips up",
+                    "Squeeze your glutes HARD at the top",
+                    "Hold for 2 seconds",
+                    "Lower slowly",
+                    "3 sets of 15 reps"
+                ],
+                keyTip: "You should feel this in your GLUTES, not your lower back. If you feel it in your back, push through your heels more."
+            },
+            "plank": {
+                category: "Core Strength",
+                description: "Holding a push-up position on your forearms, keeping your body in a straight line.",
+                purpose: "Builds core stability which is essential for maintaining running form when fatigued. A weak core = wasted energy.",
+                execution: [
+                    "Forearms on the ground, elbows under shoulders",
+                    "Body in a perfectly straight line — no sagging or piking",
+                    "Engage your core by pulling your belly button toward your spine",
+                    "Breathe normally — don't hold your breath",
+                    "Hold for 3 sets of 45 seconds"
+                ],
+                keyTip: "Quality over time. A 30-second plank with perfect form beats a 2-minute plank with a sagging back."
+            }
+        };
+
+        // ==================== TRAINING PLAN ====================
+        function getDefaultPlan() {
+            return {
+                weeks: [
+                    // PHASE 1: Aerobic Base (Weeks 1-4)
+                    {
+                        week: 1, phase: "Phase 1: Aerobic Base", phaseClass: "phase-1",
+                        description: "Build the aerobic engine. ALL runs should feel easy.",
+                        workouts: [
+                            { day: "Tuesday", type: "easy", title: "Easy Run", distance: "10-12 km", pace: "6:15-6:30/km", hr: "Zone 2 (130-140)", duration: "65-80 min", desc: "Pure |easy run|. Conversational pace only. If you can't talk in full sentences, SLOW DOWN. This builds your aerobic base." },
+                            { day: "Thursday", type: "strides", title: "Easy Run + Strides", distance: "6 km + 6×100m", pace: "6:15/km + fast", hr: "Zone 2, then brief Z4", duration: "50 min", desc: "|Easy run| of 6km, then 6× |strides|. Walk back between each stride. Focus on smooth, relaxed speed." },
+                            { day: "Friday", type: "easy", title: "Easy Run", distance: "8-10 km", pace: "6:15-6:30/km", hr: "Zone 2 (130-140)", duration: "55-65 min", desc: "Another |easy run|. Same rules: conversational, relaxed, enjoyable. Think of this as active recovery." },
+                            { day: "Saturday", type: "long", title: "Long Run", distance: "13 km", pace: "6:00-6:20/km", hr: "Zone 2 (130-145)", duration: "80-85 min", desc: "|Long run| at comfortable pace. Practice drinking water every 20 min. Start slower than you think. The |warm-up| is the first 2km." }
+                        ]
+                    },
+                    {
+                        week: 2, phase: "Phase 1: Aerobic Base", phaseClass: "phase-1",
+                        description: "Consistency is key. Keep all runs easy.",
+                        workouts: [
+                            { day: "Tuesday", type: "easy", title: "Easy Run", distance: "11-12 km", pace: "6:15-6:30/km", hr: "Zone 2", duration: "70-80 min", desc: "|Easy run|. Focus on running with good posture: tall, relaxed shoulders, slight forward lean." },
+                            { day: "Thursday", type: "strides", title: "Easy Run + Strides", distance: "7 km + 6×100m", pace: "6:15/km + fast", hr: "Zone 2 then Z4", duration: "55 min", desc: "|Easy run| with |strides|. On strides, think 'fast but effortless'. Relaxed jaw, relaxed hands." },
+                            { day: "Friday", type: "easy", title: "Easy Recovery Run", distance: "8 km", pace: "6:20-6:40/km", hr: "Zone 2 (125-140)", duration: "55 min", desc: "Recovery |easy run|. Even slower than usual. Think of it as a moving meditation." },
+                            { day: "Saturday", type: "long", title: "Long Run", distance: "14 km", pace: "6:00-6:20/km", hr: "Zone 2", duration: "85-90 min", desc: "|Long run|. +1km from last week. Hydrate every 20 min. End feeling like you could run 2 more km." }
+                        ]
+                    },
+                    {
+                        week: 3, phase: "Phase 1: Aerobic Base", phaseClass: "phase-1",
+                        description: "Building distance. Stay patient with pace.",
+                        workouts: [
+                            { day: "Tuesday", type: "easy", title: "Easy Run", distance: "12 km", pace: "6:10-6:30/km", hr: "Zone 2", duration: "75-80 min", desc: "|Easy run|. You might feel tempted to go faster as fitness builds — resist! Stay in Zone 2." },
+                            { day: "Thursday", type: "strides", title: "Easy + Strides", distance: "7 km + 8×100m", pace: "6:15/km + fast", hr: "Zone 2/Z4", duration: "55 min", desc: "|Easy run| + 8× |strides| (up from 6). Still full recovery walk between each." },
+                            { day: "Friday", type: "easy", title: "Easy Run", distance: "9 km", pace: "6:15-6:30/km", hr: "Zone 2", duration: "58-60 min", desc: "|Easy run|. Do your |glute bridges| and |plank| exercises after this run." },
+                            { day: "Saturday", type: "long", title: "Long Run", distance: "15 km", pace: "5:55-6:15/km", hr: "Zone 2", duration: "90-95 min", desc: "|Long run|. Matching your recent 15.88km distance but at a MUCH easier pace than your 5:30. Target 6:00-6:15/km." }
+                        ]
+                    },
+                    {
+                        week: 4, phase: "Phase 1: Aerobic Base", phaseClass: "phase-1",
+                        description: "End of Phase 1. Building toward your first tempo next week.",
+                        workouts: [
+                            { day: "Tuesday", type: "easy", title: "Easy Run", distance: "12 km", pace: "6:10-6:25/km", hr: "Zone 2", duration: "75-80 min", desc: "|Easy run|. Last base-building week. Your body has been adapting — trust the process." },
+                            { day: "Thursday", type: "strides", title: "Easy + Strides", distance: "7 km + 8×100m", pace: "6:15/km + fast", hr: "Zone 2/Z4", duration: "55 min", desc: "|Easy run| + |strides|. Next week you'll add |tempo run| workouts — these strides are preparing your legs." },
+                            { day: "Friday", type: "easy", title: "Easy Run", distance: "9 km", pace: "6:15-6:30/km", hr: "Zone 2", duration: "58 min", desc: "|Easy run|. Strength work after: |single-leg calf raises|, |glute bridges|, |plank|." },
+                            { day: "Saturday", type: "long", title: "Long Run", distance: "16 km", pace: "5:55-6:15/km", hr: "Zone 2", duration: "95-100 min", desc: "|Long run|. New distance PR in training! Take water every 20 min. Celebrate this milestone." }
+                        ]
+                    },
+                    // PHASE 2: Aerobic Development (Weeks 5-8)
+                    {
+                        week: 5, phase: "Phase 2: Aerobic Development", phaseClass: "phase-2",
+                        description: "Introducing tempo work and intervals. The hard work begins.",
+                        workouts: [
+                            { day: "Tuesday", type: "tempo", title: "Tempo Run", distance: "~11 km total", pace: "5:10-5:20/km tempo", hr: "Zone 3-4 (150-170)", duration: "60-65 min", desc: "|Warm-up|: 2km easy → |Tempo run|: 5km at 5:10-5:20/km → |Cool-down|: 2km easy. 'Comfortably hard' — short sentences only." },
+                            { day: "Thursday", type: "interval", title: "Interval Session", distance: "~10 km total", pace: "4:40-4:50/km reps", hr: "Zone 4 (165-175)", duration: "55-60 min", desc: "|Warm-up| 2km → 5×1000m |intervals| at 4:40-4:50/km with 90s jog recovery → |Cool-down| 2km. Keep each rep CONSISTENT." },
+                            { day: "Friday", type: "easy", title: "Easy Recovery Run", distance: "8-10 km", pace: "6:15-6:30/km", hr: "Zone 2", duration: "55-65 min", desc: "|Easy run|. After two hard days, this MUST be easy. Your legs need to recover. Don't chase pace." },
+                            { day: "Saturday", type: "long", title: "Long Run", distance: "16 km", pace: "5:50-6:10/km", hr: "Zone 2", duration: "95-100 min", desc: "|Long run|. Same distance as last week — holding steady while adding intensity on other days. Hydrate!" }
+                        ]
+                    },
+                    {
+                        week: 6, phase: "Phase 2: Aerobic Development", phaseClass: "phase-2",
+                        description: "Building tempo distance and interval volume.",
+                        workouts: [
+                            { day: "Tuesday", type: "tempo", title: "Tempo Run", distance: "~12 km total", pace: "5:10-5:20/km tempo", hr: "Zone 3-4", duration: "65-70 min", desc: "|Warm-up| 2km → |Tempo run| 6km at 5:10-5:20/km → |Cool-down| 2km. +1km tempo from last week." },
+                            { day: "Thursday", type: "interval", title: "Interval Session", distance: "~11 km total", pace: "4:40-4:50/km reps", hr: "Zone 4", duration: "60-65 min", desc: "|Warm-up| 2km → 6×1000m |intervals| at 4:40-4:50/km, 90s recovery → |Cool-down| 2km. One more rep than last week." },
+                            { day: "Friday", type: "easy", title: "Easy Recovery Run", distance: "9 km", pace: "6:15-6:30/km", hr: "Zone 2", duration: "58 min", desc: "|Easy run|. Non-negotiable easy pace. |Glute bridges| and |single-leg calf raises| after." },
+                            { day: "Saturday", type: "long", title: "Long Run", distance: "17 km", pace: "5:50-6:10/km", hr: "Zone 2", duration: "100-105 min", desc: "|Long run|. Adding 1km. Practice taking in water AND an electrolyte drink. Note how your stomach handles it." }
+                        ]
+                    },
+                    {
+                        week: 7, phase: "Phase 2: Aerobic Development", phaseClass: "phase-2",
+                        description: "⚡ DELOAD WEEK — Cut volume by 25%. Recovery is where gains happen.",
+                        workouts: [
+                            { day: "Tuesday", type: "easy", title: "Easy Run (Deload)", distance: "8 km", pace: "6:15-6:30/km", hr: "Zone 2", duration: "52 min", desc: "|Deload week| — |easy run| only. No tempo today. Your body is absorbing 6 weeks of training. Trust the process." },
+                            { day: "Thursday", type: "strides", title: "Easy + Strides (Deload)", distance: "5 km + 4×100m", pace: "6:20/km + fast", hr: "Zone 2", duration: "40 min", desc: "|Easy run| + light |strides|. Keep it short and easy. You might feel sluggish — that's NORMAL during a |deload week|." },
+                            { day: "Saturday", type: "long", title: "Long Run (Deload)", distance: "12 km", pace: "6:00-6:20/km", hr: "Zone 2", duration: "75 min", desc: "Reduced |long run|. 12km instead of 17km. Focus on sleep this week: aim for 9 hours per night." }
+                        ]
+                    },
+                    {
+                        week: 8, phase: "Phase 2: Aerobic Development", phaseClass: "phase-2",
+                        description: "Post-deload. You should feel refreshed and stronger.",
+                        workouts: [
+                            { day: "Tuesday", type: "tempo", title: "Tempo Run", distance: "~13 km total", pace: "5:05-5:15/km tempo", hr: "Zone 3-4", duration: "68-72 min", desc: "|Warm-up| 2km → |Tempo run| 7km at 5:05-5:15/km (slightly faster!) → |Cool-down| 2km. Post-deload fitness should feel noticeable." },
+                            { day: "Thursday", type: "interval", title: "Interval Session", distance: "~11 km total", pace: "4:35-4:45/km reps", hr: "Zone 4-5", duration: "60 min", desc: "|Warm-up| 2km → 6×1000m |intervals| at 4:35-4:45/km (slightly faster!), 90s recovery → |Cool-down| 2km." },
+                            { day: "Friday", type: "easy", title: "Easy Run", distance: "9 km", pace: "6:10-6:25/km", hr: "Zone 2", duration: "58 min", desc: "|Easy run|. Strength exercises after: |plank| 3×45s, side |plank| 3×30s, |glute bridges| 3×15." },
+                            { day: "Saturday", type: "long", title: "Long Run", distance: "18 km", pace: "5:45-6:05/km", hr: "Zone 2", duration: "105-110 min", desc: "|Long run|. New longest run! Carry water. Practice your race-day nutrition strategy. You're getting close to HM distance." }
+                        ]
+                    },
+                    // PHASE 3: Race-Specific (Weeks 9-11)
+                    {
+                        week: 9, phase: "Phase 3: Race-Specific", phaseClass: "phase-3",
+                        description: "Race pace work begins. Dialing in your target effort.",
+                        workouts: [
+                            { day: "Tuesday", type: "race", title: "Race Pace Workout", distance: "~14 km total", pace: "4:58-5:05/km race pace", hr: "Zone 3-4", duration: "70-75 min", desc: "|Warm-up| 2km → |Race pace| 8km at 4:58-5:05/km → |Cool-down| 2km. Learn what 4:58/km FEELS like. Memorize this effort." },
+                            { day: "Thursday", type: "interval", title: "VO2max Intervals", distance: "~10 km total", pace: "4:20-4:30/km reps", hr: "Zone 5 (175+)", duration: "55 min", desc: "|Warm-up| 2km → 5×800m |VO2max intervals| at 4:20-4:30/km, 2min jog recovery → |Cool-down| 2km. These are HARD. Focus on form when tired." },
+                            { day: "Friday", type: "easy", title: "Easy Recovery Run", distance: "8 km", pace: "6:15-6:30/km", hr: "Zone 2", duration: "52 min", desc: "|Easy run|. Keep it genuinely easy after yesterday's hard session." },
+                            { day: "Saturday", type: "long", title: "Long Run", distance: "20 km", pace: "5:40-6:00/km", hr: "Zone 2", duration: "115-120 min", desc: "|Long run| — your LONGEST ever! This is a massive confidence booster. Start easy (6:00), finish moderately (5:40). |Negative split| approach. Hydrate every 15-20 min." }
+                        ]
+                    },
+                    {
+                        week: 10, phase: "Phase 3: Race-Specific", phaseClass: "phase-3",
+                        description: "Peak week. Full half marathon distance in training.",
+                        workouts: [
+                            { day: "Tuesday", type: "race", title: "Race Pace Workout", distance: "~16 km total", pace: "4:58-5:05/km race pace", hr: "Zone 3-4", duration: "80-85 min", desc: "|Warm-up| 2km → |Race pace| 10km at 4:58-5:05/km → |Cool-down| 2km. 10km at goal pace! This proves you can do it." },
+                            { day: "Thursday", type: "interval", title: "VO2max Intervals", distance: "~11 km total", pace: "4:20-4:30/km reps", hr: "Zone 5", duration: "60 min", desc: "|Warm-up| 2km → 6×800m |VO2max intervals| at 4:20-4:30/km, 2min recovery → |Cool-down| 2km." },
+                            { day: "Friday", type: "easy", title: "Easy Run", distance: "8 km", pace: "6:15-6:30/km", hr: "Zone 2", duration: "52 min", desc: "|Easy run|. Last easy run before the distance peak. |Single-leg calf raises|, |plank| after." },
+                            { day: "Saturday", type: "long", title: "Full HM Distance Run", distance: "21 km", pace: "5:30-5:45/km", hr: "Zone 2-3", duration: "118-125 min", desc: "The big one: full 21.1km |long run| at 5:30-5:45/km (NOT race pace). This is a dress rehearsal. Practice everything: hydration, nutrition, pacing. You've GOT this. |Negative split|: start at 5:45, finish at 5:30." }
+                        ]
+                    },
+                    {
+                        week: 11, phase: "Phase 3: Race-Specific", phaseClass: "phase-3",
+                        description: "Beginning to taper. Reduce volume, maintain intensity.",
+                        workouts: [
+                            { day: "Tuesday", type: "tempo", title: "Short Tempo", distance: "~10 km total", pace: "5:05-5:15/km tempo", hr: "Zone 3-4", duration: "55 min", desc: "|Warm-up| 2km → |Tempo run| 5km at 5:05-5:15/km → |Cool-down| 2km. Shorter but sharp. Keep the quality." },
+                            { day: "Thursday", type: "interval", title: "Short Intervals", distance: "~8 km total", pace: "4:30-4:40/km reps", hr: "Zone 4-5", duration: "45 min", desc: "|Warm-up| 2km → 4×800m |intervals| at 4:30-4:40/km, 2min recovery → |Cool-down| 2km. Fewer reps, same speed. Stay sharp." },
+                            { day: "Saturday", type: "long", title: "Moderate Long Run", distance: "16 km", pace: "5:45-6:05/km", hr: "Zone 2", duration: "95 min", desc: "Reduced |long run|. You're tapering. This run should feel EASY and leave you wanting more. That's the point." }
+                        ]
+                    },
+                    // PHASE 4: Taper + Race (Week 12)
+                    {
+                        week: 12, phase: "Phase 4: Taper & Race", phaseClass: "phase-4",
+                        description: "🏁 RACE WEEK. Less is more. Stay sharp, stay rested.",
+                        workouts: [
+                            { day: "Tuesday", type: "easy", title: "Shakeout + Strides", distance: "5 km + 4×100m", pace: "6:15/km + fast", hr: "Zone 1-2", duration: "35 min", desc: "Light |easy run| + 4× |strides|. Keep it short and snappy. Focus on how GOOD your legs feel." },
+                            { day: "Thursday", type: "race", title: "Race Pace Shakeout", distance: "~7 km total", pace: "4:58/km for 3km", hr: "Zone 2-3", duration: "38 min", desc: "|Warm-up| 2km → |Race pace| 3km at exactly 4:58/km → |Cool-down| 2km. Short, sharp, confident. Visualize race day." },
+                            { day: "Friday", type: "rest", title: "REST DAY", distance: "0 km", pace: "—", hr: "—", duration: "—", desc: "Complete rest or a 15-minute walk. Lay out your race kit. Hydrate well. Eat carbs. Sleep early." },
+                            { day: "Saturday/Sunday", type: "race", title: "🏁 RACE DAY – Half Marathon", distance: "21.1 km", pace: "4:58/km → 1:45:00", hr: "Zone 3-4", duration: "1:45:00", desc: "THIS IS IT. Pacing plan: 0-5km at 5:02/km (25:10) → 5-10km at 4:58 (49:50) → 10-15km at 4:58 (1:14:40) → 15-21.1km at 4:52 (|negative split| finish!) → TARGET: 1:44:30-1:45:00. Trust your training. You earned this. 🎉" }
+                        ]
+                    }
+                ]
+            };
+        }
+
+        if (!appData.plan) {
+            appData.plan = getDefaultPlan();
+            saveData();
+        }
+
+        // ==================== NAVIGATION ====================
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            event.target.classList.add('active');
+
+            if (pageId === 'dashboard') renderDashboard();
+            if (pageId === 'plan') renderPlan();
+            if (pageId === 'history') renderHistory();
+            if (pageId === 'log') initLogForm();
+        }
+
+        // ==================== DASHBOARD ====================
+        function renderDashboard() {
+            const runs = appData.runs;
+            const totalDistance = runs.reduce((s, r) => s + (r.distance || 0), 0);
+            const totalRuns = runs.length;
+            const avgPace = runs.length ? runs.reduce((s, r) => s + paceToSeconds(r.pace || "6:00"), 0) / runs.length : 0;
+            const latestVO2 = runs.length ? runs[runs.length - 1].vo2max || appData.profile.currentVO2max : appData.profile.currentVO2max;
+            const avgHR = runs.length ? Math.round(runs.reduce((s, r) => s + (r.avgHR || 0), 0) / runs.length) : 0;
+            const longestRun = runs.length ? Math.max(...runs.map(r => r.distance || 0)) : 0;
+
+            // Calculate completed workouts
+            const completedCount = Object.keys(appData.completedWorkouts).length;
+            const totalWorkouts = appData.plan.weeks.reduce((s, w) => s + w.workouts.length, 0);
+
+            document.getElementById('dashboardStats').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-label">Total Distance</div>
+                    <div class="stat-value">${totalDistance.toFixed(1)} km</div>
+                    <div class="stat-sub">${totalRuns} runs logged</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Average Pace</div>
+                    <div class="stat-value">${avgPace ? secondsToPace(avgPace) : '—'}</div>
+                    <div class="stat-sub">Target: 4:58/km</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Latest VO2max</div>
+                    <div class="stat-value">${latestVO2}</div>
+                    <div class="stat-sub">Target: 53-55</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg Heart Rate</div>
+                    <div class="stat-value">${avgHR || '—'} bpm</div>
+                    <div class="stat-sub">Easy runs: aim for 130-140</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Longest Run</div>
+                    <div class="stat-value">${longestRun.toFixed(1)} km</div>
+                    <div class="stat-sub">Target: 21.1 km</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Workouts Done</div>
+                    <div class="stat-value">${completedCount}/${totalWorkouts}</div>
+                    <div class="stat-sub">Plan completion</div>
+                </div>
+            `;
+
+            // Progress
+            const pct = Math.round((completedCount / totalWorkouts) * 100);
+            document.getElementById('progressPct').textContent = pct + '%';
+            document.getElementById('progressBar').style.width = pct + '%';
+            document.getElementById('progressWeek').textContent = `Week ${appData.profile.currentWeek} of 12`;
+            document.getElementById('progressWorkouts').textContent = `${completedCount} workouts completed`;
+
+            // Charts
+            renderCharts();
+            checkWeeklyReminder();
+        }
+
+        function renderCharts() {
+            const runs = appData.runs;
+            if (!runs.length) {
+                document.getElementById('distanceChart').innerHTML = '<p style="color:var(--text-dim); text-align:center; width:100%; padding:60px 0;">Log some runs to see charts</p>';
+                document.getElementById('paceChart').innerHTML = '<p style="color:var(--text-dim); text-align:center; width:100%; padding:60px 0;">Log some runs to see charts</p>';
+                document.getElementById('hrChart').innerHTML = '<p style="color:var(--text-dim); text-align:center; width:100%; padding:60px 0;">Log some runs to see charts</p>';
+                return;
+            }
+
+            // Group by week
+            const weeklyData = {};
+            runs.forEach(r => {
+                const d = new Date(r.date);
+                const weekStart = new Date(d);
+                weekStart.setDate(d.getDate() - d.getDay());
+                const key = weekStart.toISOString().slice(0, 10);
+                if (!weeklyData[key]) weeklyData[key] = { distance: 0, paces: [], hrs: [], count: 0 };
+                weeklyData[key].distance += r.distance || 0;
+                if (r.pace) weeklyData[key].paces.push(paceToSeconds(r.pace));
+                if (r.avgHR) weeklyData[key].hrs.push(r.avgHR);
+                weeklyData[key].count++;
+            });
+
+            const weeks = Object.keys(weeklyData).sort().slice(-8);
+            const maxDist = Math.max(...weeks.map(w => weeklyData[w].distance), 1);
+
+            // Distance chart
+            document.getElementById('distanceChart').innerHTML = weeks.map(w => {
+                const d = weeklyData[w].distance;
+                const h = (d / maxDist) * 100;
+                const label = w.slice(5);
+                return `<div class="bar-group"><div class="bar-value">${d.toFixed(0)}</div><div class="bar" style="height:${h}%"></div><div class="bar-label">${label}</div></div>`;
+            }).join('');
+
+            // Pace chart
+            const pacesPerWeek = weeks.map(w => {
+                const avg = weeklyData[w].paces.length ? weeklyData[w].paces.reduce((a,b)=>a+b,0)/weeklyData[w].paces.length : 0;
+                return avg;
+            });
+            const maxPace = Math.max(...pacesPerWeek.filter(p=>p>0), 1);
+            document.getElementById('paceChart').innerHTML = weeks.map((w, i) => {
+                const p = pacesPerWeek[i];
+                const h = p ? ((maxPace - p + 60) / (maxPace - Math.min(...pacesPerWeek.filter(x=>x>0)) + 120)) * 100 : 0;
+                return `<div class="bar-group"><div class="bar-value">${p ? secondsToPace(p) : '—'}</div><div class="bar" style="height:${Math.max(h, 5)}%; background: linear-gradient(180deg, var(--orange), var(--orange-dim))"></div><div class="bar-label">${w.slice(5)}</div></div>`;
+            }).join('');
+
+            // HR chart
+            const hrsPerWeek = weeks.map(w => {
+                return weeklyData[w].hrs.length ? Math.round(weeklyData[w].hrs.reduce((a,b)=>a+b,0)/weeklyData[w].hrs.length) : 0;
+            });
+            const maxHR = Math.max(...hrsPerWeek.filter(h=>h>0), 1);
+            document.getElementById('hrChart').innerHTML = weeks.map((w, i) => {
+                const hr = hrsPerWeek[i];
+                const h = hr ? (hr / maxHR) * 80 : 0;
+                return `<div class="bar-group"><div class="bar-value">${hr || '—'}</div><div class="bar" style="height:${Math.max(h, 5)}%; background: linear-gradient(180deg, var(--warning), var(--warning-dim))"></div><div class="bar-label">${w.slice(5)}</div></div>`;
+            }).join('');
+        }
+
+        // ==================== TRAINING PLAN ====================
+        function renderPlan() {
+            const plan = appData.plan;
+            const currentWeek = appData.profile.currentWeek;
+
+            // Week selector
+            document.getElementById('weekSelector').innerHTML = plan.weeks.map(w => {
+                const allDone = w.workouts.every((_, i) => appData.completedWorkouts[`w${w.week}_${i}`]);
+                let cls = 'week-btn';
+                if (w.week === currentWeek) cls += ' active';
+                else if (allDone) cls += ' completed';
+                return `<button class="${cls}" onclick="selectWeek(${w.week})">W${w.week}</button>`;
+            }).join('');
+
+            selectWeek(currentWeek);
+        }
+
+        function selectWeek(weekNum) {
+            appData.profile.currentWeek = weekNum;
+            saveData();
+
+            document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.week-btn').forEach(b => {
+                if (b.textContent === 'W' + weekNum) b.classList.add('active');
+            });
+
+            const week = appData.plan.weeks.find(w => w.week === weekNum);
+            if (!week) return;
+
+            document.getElementById('weekPhase').innerHTML = `
+                <span class="phase-badge ${week.phaseClass}">${week.phase}</span>
+                <h2 style="font-size:20px; margin-bottom:4px;">Week ${week.week}</h2>
+                <p style="font-size:14px; color:var(--text-secondary); margin-bottom:20px;">${week.description}</p>
+            `;
+
+            document.getElementById('weekWorkouts').innerHTML = week.workouts.map((wo, i) => {
+                const key = `w${weekNum}_${i}`;
+                const done = appData.completedWorkouts[key];
+                const descHtml = parseExerciseTerms(wo.desc);
+
+                return `
+                <div class="workout-card ${done ? 'completed' : ''}">
+                    <div class="workout-header">
+                        <span class="workout-day">${wo.day}</span>
+                        <span class="workout-type type-${wo.type}">${wo.type}</span>
+                    </div>
+                    <div class="workout-title">${wo.title}</div>
+                    <div class="workout-desc">${descHtml}</div>
+                    <div class="workout-metrics">
+                        <div class="workout-metric">📏 Distance: <span>${wo.distance}</span></div>
+                        <div class="workout-metric">⏱️ Pace: <span>${wo.pace}</span></div>
+                        <div class="workout-metric">❤️ HR: <span>${wo.hr}</span></div>
+                        <div class="workout-metric">⏰ Duration: <span>${wo.duration}</span></div>
+                    </div>
+                    <div class="workout-actions">
+                        <button class="btn btn-sm ${done ? 'btn-accent' : ''}" onclick="toggleWorkout('${key}')">
+                            ${done ? '✅ Completed' : '⬜ Mark Complete'}
+                        </button>
+                        <button class="btn btn-sm" onclick="logFromWorkout('${wo.type}', '${wo.day}')">📝 Log This Run</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function parseExerciseTerms(text) {
+            return text.replace(/\|([^|]+)\|/g, (match, term) => {
+                const key = term.toLowerCase();
+                if (exerciseDB[key]) {
+                    return `<span class="exercise-term" onclick="showExercise('${key}')">${term}</span>`;
+                }
+                return term;
+            });
+        }
+
+        function toggleWorkout(key) {
+            if (appData.completedWorkouts[key]) {
+                delete appData.completedWorkouts[key];
+            } else {
+                appData.completedWorkouts[key] = new Date().toISOString();
+            }
+            saveData();
+            renderPlan();
+        }
+
+        function logFromWorkout(type, day) {
+            showPage('log');
+            document.querySelectorAll('.nav-btn').forEach(b => {
+                b.classList.toggle('active', b.textContent.trim() === 'Log Run');
+            });
+            document.getElementById('logType').value = type === 'strides' ? 'strides' : type;
+            document.getElementById('logDate').value = new Date().toISOString().slice(0, 10);
+        }
+
+        // ==================== EXERCISE MODAL ====================
+        function showExercise(key) {
+            const ex = exerciseDB[key];
+            if (!ex) return;
+
+            document.getElementById('modalTitle').textContent = key.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            document.getElementById('modalCategory').textContent = ex.category;
+
+            let content = `<p>${ex.description}</p>`;
+            content += `<p><strong>Purpose:</strong> ${ex.purpose}</p>`;
+            content += `<p><strong>How to execute:</strong></p><ul>`;
+            ex.execution.forEach(step => {
+                content += `<li>${step}</li>`;
+            });
+            content += `</ul>`;
+            content += `<p style="background:var(--accent-dim); padding:12px 16px; border-radius:8px; border-left:3px solid var(--accent); color:var(--accent); font-weight:500;">💡 ${ex.keyTip}</p>`;
+
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('exerciseModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('exerciseModal').classList.remove('active');
+        }
+
+        document.getElementById('exerciseModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('exerciseModal')) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // ==================== LOG RUN ====================
+        function initLogForm() {
+            if (!document.getElementById('logDate').value) {
+                document.getElementById('logDate').value = new Date().toISOString().slice(0, 10);
+            }
+        }
+
+        function saveRun() {
+            const run = {
+                id: Date.now(),
+                date: document.getElementById('logDate').value,
+                type: document.getElementById('logType').value,
+                distance: parseFloat(document.getElementById('logDistance').value) || 0,
+                duration: parseFloat(document.getElementById('logDuration').value) || 0,
+                pace: document.getElementById('logPace').value,
+                avgHR: parseInt(document.getElementById('logHR').value) || 0,
+                maxHR: parseInt(document.getElementById('logMaxHR').value) || 0,
+                vo2max: parseFloat(document.getElementById('logVO2').value) || 0,
+                sweatLoss: parseFloat(document.getElementById('logSweat').value) || 0,
+                rpe: parseInt(document.getElementById('logRPE').value) || 0,
+                cadence: parseInt(document.getElementById('logCadence').value) || 0,
+                elevation: parseInt(document.getElementById('logElevation').value) || 0,
+                zones: {
+                    z1: parseFloat(document.getElementById('logZ1').value) || 0,
+                    z2: parseFloat(document.getElementById('logZ2').value) || 0,
+                    z3: parseFloat(document.getElementById('logZ3').value) || 0,
+                    z4: parseFloat(document.getElementById('logZ4').value) || 0,
+                    z5: parseFloat(document.getElementById('logZ5').value) || 0
+                },
+                notes: document.getElementById('logNotes').value,
+                sleep: parseFloat(document.getElementById('logSleep').value) || 0,
+                weight: parseFloat(document.getElementById('logWeight').value) || 0
+            };
+
+            if (!run.date || !run.distance) {
+                showToast('⚠️ Please enter at least a date and distance');
+                return;
+            }
+
+            // Auto-calculate pace if not provided
+            if (!run.pace && run.distance && run.duration) {
+                const paceSeconds = (run.duration * 60) / run.distance;
+                run.pace = secondsToPace(paceSeconds);
+                document.getElementById('logPace').value = run.pace;
+            }
+
+            appData.runs.push(run);
+            appData.runs.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            // Update profile with latest data
+            if (run.vo2max) appData.profile.currentVO2max = run.vo2max;
+
+            saveData();
+            showToast('✅ Run saved successfully!');
+            clearForm();
+        }
+
+        function clearForm() {
+            ['logDate', 'logDistance', 'logDuration', 'logPace', 'logHR', 'logMaxHR', 'logVO2', 'logSweat', 'logRPE', 'logCadence', 'logElevation', 'logZ1', 'logZ2', 'logZ3', 'logZ4', 'logZ5', 'logNotes', 'logSleep', 'logWeight'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+            document.getElementById('logDate').value = new Date().toISOString().slice(0, 10);
+        }
+
+        // ==================== HISTORY ====================
+        function renderHistory() {
+            const runs = appData.runs;
+
+            if (!runs.length) {
+                document.getElementById('historyBody').innerHTML = '';
+                document.getElementById('noHistory').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('noHistory').style.display = 'none';
+            document.getElementById('historyBody').innerHTML = [...runs].reverse().map(r => {
+                const totalZone = (r.zones.z1 + r.zones.z2 + r.zones.z3 + r.zones.z4 + r.zones.z5) || 1;
+                const highIntensityPct = Math.round(((r.zones.z4 + r.zones.z5) / totalZone) * 100);
+                const hiColor = highIntensityPct > 30 ? 'var(--warning)' : 'var(--accent)';
+
+                return `<tr>
+                    <td>${r.date}</td>
+                    <td><span class="workout-type type-${r.type}" style="font-size:10px;">${r.type}</span></td>
+                    <td>${r.distance} km</td>
+                    <td>${r.duration} min</td>
+                    <td>${r.pace || '—'}</td>
+                    <td>${r.avgHR || '—'}</td>
+                    <td>${r.vo2max || '—'}</td>
+                    <td>${r.rpe || '—'}/10</td>
+                    <td style="color:${hiColor}">${highIntensityPct}%</td>
+                    <td><button class="delete-btn" onclick="deleteRun(${r.id})">🗑️</button></td>
+                </tr>`;
+            }).join('');
+        }
+
+        function deleteRun(id) {
+            if (!confirm('Delete this run?')) return;
+            appData.runs = appData.runs.filter(r => r.id !== id);
+            saveData();
+            renderHistory();
+            showToast('🗑️ Run deleted');
+        }
+
+        // ==================== PROMPT GENERATOR ====================
+        function generatePrompt() {
+            const runs = appData.runs;
+            const profile = appData.profile;
+            const completedCount = Object.keys(appData.completedWorkouts).length;
+            const totalWorkouts = appData.plan.weeks.reduce((s, w) => s + w.workouts.length, 0);
+
+            // Compute stats
+            const recentRuns = runs.slice(-10);
+            const totalDistance = runs.reduce((s, r) => s + (r.distance || 0), 0);
+            const avgPace = runs.length ? secondsToPace(runs.reduce((s, r) => s + paceToSeconds(r.pace || "6:00"), 0) / runs.length) : "no data";
+            const latestVO2 = runs.length ? runs[runs.length - 1].vo2max || profile.currentVO2max : profile.currentVO2max;
+            const longestRun = runs.length ? Math.max(...runs.map(r => r.distance || 0)) : 0;
+
+            // Zone distribution analysis
+            let totalZ1=0,totalZ2=0,totalZ3=0,totalZ4=0,totalZ5=0,totalZTime=0;
+            runs.forEach(r => {
+                totalZ1 += r.zones.z1; totalZ2 += r.zones.z2; totalZ3 += r.zones.z3;
+                totalZ4 += r.zones.z4; totalZ5 += r.zones.z5;
+                totalZTime += r.zones.z1+r.zones.z2+r.zones.z3+r.zones.z4+r.zones.z5;
+            });
+            const zoneDistribution = totalZTime > 0 ? `Z1: ${((totalZ1/totalZTime)*100).toFixed(1)}%, Z2: ${((totalZ2/totalZTime)*100).toFixed(1)}%, Z3: ${((totalZ3/totalZTime)*100).toFixed(1)}%, Z4: ${((totalZ4/totalZTime)*100).toFixed(1)}%, Z5: ${((totalZ5/totalZTime)*100).toFixed(1)}%` : "No zone data yet";
+
+            // Average RPE
+            const rpeRuns = runs.filter(r => r.rpe > 0);
+            const avgRPE = rpeRuns.length ? (rpeRuns.reduce((s,r) => s+r.rpe, 0) / rpeRuns.length).toFixed(1) : "no data";
+
+            // Sleep average
+            const sleepRuns = runs.filter(r => r.sleep > 0);
+            const avgSleep = sleepRuns.length ? (sleepRuns.reduce((s,r) => s+r.sleep, 0) / sleepRuns.length).toFixed(1) : "no data";
+
+            // Recent notes
+            const recentNotes = recentRuns.filter(r => r.notes).map(r => `[${r.date}] ${r.notes}`).join('\n');
+
+            // Pace trend
+            const paceTrend = recentRuns.map(r => `${r.date}: ${r.distance}km @ ${r.pace} (HR:${r.avgHR}, RPE:${r.rpe}/10, Type:${r.type})`).join('\n');
+
+            const prompt = `You are an expert running coach specializing in youth endurance training. I need you to analyze my training data and provide an updated, personalized training plan.
+
+══════════════════════════════════════════
+ATHLETE PROFILE
+══════════════════════════════════════════
+• Age: ${profile.age}
+• Goal: Half Marathon in ${profile.targetTime} (pace: ${profile.targetPace}/km)
+• Current estimated VO2max: ${latestVO2}
+• Current average pace: ${avgPace}
+• Sweat rate: ${profile.sweatRate} L/hr
+• Current training week: ${profile.currentWeek} of 12
+• Plan completion: ${completedCount}/${totalWorkouts} workouts (${Math.round(completedCount/totalWorkouts*100)}%)
+
+══════════════════════════════════════════
+TRAINING DATA SUMMARY
+══════════════════════════════════════════
+• Total runs logged: ${runs.length}
+• Total distance: ${totalDistance.toFixed(1)} km
+• Longest run: ${longestRun.toFixed(1)} km
+• Average RPE: ${avgRPE}/10
+• Average sleep: ${avgSleep} hours
+• Heart rate zone distribution (all runs): ${zoneDistribution}
+
+══════════════════════════════════════════
+RECENT RUNS (Last ${recentRuns.length})
+══════════════════════════════════════════
+${paceTrend || "No runs logged yet"}
+
+══════════════════════════════════════════
+RECENT NOTES & OBSERVATIONS
+══════════════════════════════════════════
+${recentNotes || "No notes logged"}
+
+══════════════════════════════════════════
+AVAILABLE TRAINING DAYS & TIME
+══════════════════════════════════════════
+• Monday: 45 min (optional)
+• Tuesday: 2.5 hours
+• Thursday: 1.5 hours
+• Friday: 2.5 hours
+• Saturday: 2 hours
+• Sunday: 2 hours
+• Preference: 3-4 sessions per week
+
+══════════════════════════════════════════
+CURRENT PLAN STRUCTURE
+══════════════════════════════════════════
+The current plan is a 12-week periodized program with:
+- Phase 1 (Weeks 1-4): Aerobic Base
+- Phase 2 (Weeks 5-8): Aerobic Development + Tempo/Intervals
+- Phase 3 (Weeks 9-11): Race-Specific
+- Phase 4 (Week 12): Taper + Race
+- Week 7 is a deload week
+- Sessions: Tuesday (long/tempo), Thursday (intervals/strides), Friday (easy), Saturday (long run)
+
+══════════════════════════════════════════
+WHAT I NEED FROM YOU
+══════════════════════════════════════════
+
+1. **ANALYSIS**: Analyze my data and identify:
+   - Am I running too much in Zone 4-5? (80/20 rule compliance)
+   - Is my pace improving? Stagnating? Declining?
+   - Is my VO2max trending up?
+   - Am I sleeping enough?
+   - Any red flags from my notes (pain, fatigue, etc.)?
+   - Am I on track for 1:45 half marathon?
+
+2. **ADJUSTMENTS**: Based on analysis, suggest specific adjustments to:
+   - Paces for each workout type
+   - Distances for this week
+   - Intensity distribution
+   - Recovery recommendations
+   - Nutrition/hydration tips based on my sweat data
+
+3. **UPDATED PLAN**: Provide an updated training plan for the REMAINING weeks (from week ${profile.currentWeek} onward) in this exact JSON format so I can import it into my tracker:
+
+\`\`\`json
+{
+  "weeks": [
+    {
+      "week": ${profile.currentWeek},
+      "phase": "Phase Name",
+      "phaseClass": "phase-1|phase-2|phase-3|phase-4",
+      "description": "Week description",
+      "workouts": [
+        {
+          "day": "Tuesday",
+          "type": "easy|tempo|interval|long|race|strides|rest",
+          "title": "Workout Title",
+          "distance": "10 km",
+          "pace": "6:00-6:15/km",
+          "hr": "Zone 2 (130-140)",
+          "duration": "65 min",
+          "desc": "Description with |exercise terms| in pipes for clickable links. Available terms: |easy run|, |tempo run|, |intervals|, |long run|, |strides|, |race pace|, |VO2max intervals|, |progressive run|, |deload week|, |warm-up|, |cool-down|, |negative split|, |single-leg calf raises|, |glute bridges|, |plank|"
+        }
+      ]
+    }
+  ]
+}
+\`\`\`
+
+4. **MOTIVATION**: Give me a brief motivational note based on my progress.
+
+IMPORTANT CONSTRAINTS:
+- I am 15 years old — injury prevention and growth are critical
+- Never exceed 10% weekly mileage increase
+- Maintain 80/20 easy/hard ratio
+- Include deload weeks every 3-4 weeks
+- Keep the same day structure (Tue/Thu/Fri or Sat)
+- All paces and HR zones should be adjusted based on my ACTUAL data
+- The plan should be progressive but safe for a developing athlete`;
+
+            document.getElementById('promptOutput').textContent = prompt;
+            appData.lastPromptDate = new Date().toISOString();
+            saveData();
+            showToast('✅ Prompt generated! Copy and paste into ChatGPT/Claude');
+        }
+
+        function copyPrompt() {
+            const text = document.getElementById('promptOutput').textContent;
+            if (text.startsWith('Click "Generate')) {
+                showToast('⚠️ Generate the prompt first!');
+                return;
+            }
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('📋 Prompt copied to clipboard!');
+            }).catch(() => {
+                // Fallback
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast('📋 Prompt copied to clipboard!');
+            });
+        }
+
+        function applyAIPlan() {
+            const input = document.getElementById('aiPlanInput').value.trim();
+            if (!input) {
+                showToast('⚠️ Paste the AI-generated plan JSON first');
+                return;
+            }
+
+            try {
+                // Try to extract JSON from the text (in case AI wraps it in markdown)
+                let jsonStr = input;
+                const jsonMatch = input.match(/```json\s*([\s\S]*?)\s*```/);
+                if (jsonMatch) jsonStr = jsonMatch[1];
+                const match2 = input.match(/\{[\s\S]*\}/);
+                if (match2 && !jsonMatch) jsonStr = match2[0];
+
+                const newPlan = JSON.parse(jsonStr);
+
+                if (!newPlan.weeks || !Array.isArray(newPlan.weeks)) {
+                    throw new Error('Invalid plan format: missing weeks array');
+                }
+
+                // Merge: keep completed weeks, replace remaining
+                const currentWeek = appData.profile.currentWeek;
+                const existingWeeks = appData.plan.weeks.filter(w => w.week < currentWeek);
+                const updatedPlan = {
+                    weeks: [...existingWeeks, ...newPlan.weeks]
+                };
+
+                appData.plan = updatedPlan;
+                saveData();
+                showToast('✅ Training plan updated successfully!');
+                document.getElementById('aiPlanInput').value = '';
+
+                // Switch to plan view
+                showPage('plan');
+                document.querySelectorAll('.nav-btn').forEach(b => {
+                    b.classList.toggle('active', b.textContent.trim() === 'Training Plan');
+                });
+            } catch (e) {
+                showToast('❌ Error parsing plan: ' + e.message);
+                console.error(e);
+            }
+        }
+
+        // ==================== EXPORT / IMPORT ====================
+        function exportData() {
+            const blob = new Blob([JSON.stringify(appData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `runtracker_backup_${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('📦 Data exported successfully!');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (imported.runs && imported.profile) {
+                        appData = { ...DEFAULT_DATA, ...imported };
+                        saveData();
+                        showToast('📥 Data imported successfully!');
+                        renderDashboard();
+                    } else {
+                        showToast('❌ Invalid data file');
+                    }
+                } catch (err) {
+                    showToast('❌ Error reading file: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        // ==================== UTILITIES ====================
+        function paceToSeconds(pace) {
+            if (!pace || typeof pace !== 'string') return 360;
+            const clean = pace.replace('/km', '').trim().split('-')[0].trim();
+            const parts = clean.split(':');
+            if (parts.length !== 2) return 360;
+            return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+        }
+
+        function secondsToPace(seconds) {
+            const min = Math.floor(seconds / 60);
+            const sec = Math.round(seconds % 60);
+            return `${min}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function checkWeeklyReminder() {
+            const lastPrompt = appData.lastPromptDate;
+            const reminder = document.getElementById('weeklyReminder');
+
+            if (!lastPrompt) {
+                reminder.classList.remove('hidden');
+                return;
+            }
+
+            const daysSince = (Date.now() - new Date(lastPrompt).getTime()) / (1000 * 60 * 60 * 24);
+            if (daysSince >= 7) {
+                reminder.classList.remove('hidden');
+            } else {
+                reminder.classList.add('hidden');
+            }
+        }
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDashboard();
+
+            // Add click handlers for nav buttons properly
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const pages = ['Dashboard', 'Training Plan', 'Log Run', 'History', 'AI Update'];
+                    const ids = ['dashboard', 'plan', 'log', 'history', 'prompt'];
+                    const idx = pages.indexOf(this.textContent.trim());
+                    if (idx >= 0) {
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                        document.getElementById('page-' + ids[idx]).classList.add('active');
+                        this.classList.add('active');
+
+                        if (ids[idx] === 'dashboard') renderDashboard();
+                        if (ids[idx] === 'plan') renderPlan();
+                        if (ids[idx] === 'history') renderHistory();
+                        if (ids[idx] === 'log') initLogForm();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
