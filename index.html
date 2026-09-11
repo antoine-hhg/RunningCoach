@@ -395,6 +395,7 @@
         </div>
         <div class="header-actions">
             <button class="btn btn-outline" onclick="openGuide()">Guide</button>
+            <button class="btn btn-outline" onclick="openDataModal()">Data</button>
             <button class="btn" onclick="startProfileWizard()">Profile</button>
         </div>
     </header>
@@ -610,6 +611,40 @@
         </div>
     </div>
 
+    <!-- Data & Storage Management Modal -->
+    <div class="modal-overlay" id="dataModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('dataModal')">&times;</button>
+            <h2>Data & Storage</h2>
+            <h3>Local Storage Management</h3>
+            
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label>Storage Status</label>
+                <div id="storageStatus" style="font-size: 13px; color: var(--text-secondary); background: var(--bg-secondary); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+                    Checking storage...
+                </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:16px;">
+                <button class="btn btn-accent" onclick="exportDataJSON()">Export Data (Download JSON)</button>
+                <button class="btn btn-outline" onclick="copyDataJSON()">Copy Data to Clipboard</button>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label>Import Data (JSON Backup)</label>
+                <textarea id="importJsonInput" placeholder="Paste your saved JSON here to restore data..." style="min-height:80px; font-family: monospace; font-size:11px;"></textarea>
+                <button class="btn" style="margin-top:8px; width:100%;" onclick="importDataJSON()">Import & Restore</button>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label>Inspect Local Storage JSON</label>
+                <div class="prompt-box" id="storageInspectBox" style="max-height:140px; font-size:11px;"></div>
+            </div>
+
+            <button class="btn" style="background: var(--warning-dim); color: var(--warning); border-color: var(--warning); width:100%; font-weight:700;" onclick="resetLocalStorage()">Reset All Local Storage Data</button>
+        </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <script>
@@ -671,7 +706,17 @@
         }
         function isObject(item) { return (item && typeof item === 'object' && !Array.isArray(item)); }
 
-        function saveData() { localStorage.setItem('trit_data', JSON.stringify(appData)); }
+        function saveData() { 
+            try {
+                localStorage.setItem('trit_data', JSON.stringify(appData)); 
+            } catch(e) {
+                console.error("Failed to save data to localStorage:", e);
+            }
+        }
+
+        // Auto-save on page hide/unload (Safari iOS tab closing & navigation fix)
+        window.addEventListener('beforeunload', saveData);
+        window.addEventListener('pagehide', saveData);
 
         // Core Initialization
         document.addEventListener('DOMContentLoaded', () => {
@@ -873,30 +918,103 @@
             });
         }
 
-        // --- Motivational Quote Helper ---
+        // --- Motivational Quote Helper (Single quote per day fix) ---
         function getTodayQuote(rawQuote) {
-            if (!rawQuote) return "Consistency beats intensity. Keep pushing forward!";
-            if (typeof rawQuote !== 'string') return "Consistency beats intensity. Keep pushing forward!";
+            if (!rawQuote || typeof rawQuote !== 'string') return "Consistency beats intensity. Keep pushing forward!";
 
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const todayName = days[new Date().getDay()];
+
+            // 1. Pipe-separated quote strings
             if (rawQuote.includes('|')) {
                 const quotes = rawQuote.split('|').map(q => q.trim());
-                const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                const todayName = days[new Date().getDay()];
-
-                // Find matching day quote string
                 const match = quotes.find(q => q.toLowerCase().includes(todayName.toLowerCase()));
                 if (match) {
                     return match.replace(new RegExp(`^${todayName}:?\\s*`, 'i'), '').replace(/^"|"$/g, '');
                 }
-
-                // Index-based fallback (0 = Sun, 1 = Mon...)
                 const dayIdx = new Date().getDay();
-                if (quotes[dayIdx]) {
-                    return quotes[dayIdx].replace(/^[A-Za-z]+:\s*/, '').replace(/^"|"$/g, '');
-                }
-                return quotes[0].replace(/^[A-Za-z]+:\s*/, '').replace(/^"|"$/g, '');
+                return (quotes[dayIdx] || quotes[0]).replace(/^[A-Za-z]+:\s*/, '').replace(/^"|"$/g, '');
             }
-            return rawQuote.replace(/^"|"$/g, '');
+
+            // 2. Multi-day concatenated text (e.g. "Tuesday: Swim... Wednesday: Ride...")
+            const dayRegex = new RegExp(`(?:${todayName}|${todayName.slice(0,3)})\\s*:\\s*([^.|\\n]+(?=[\\s.]*(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)|$))`, 'i');
+            const match = rawQuote.match(dayRegex);
+            if (match && match[1]) {
+                return match[1].trim().replace(/^"|"$/g, '');
+            }
+
+            // 3. Fallback matching quote section following current day name
+            const fallBackRegex = new RegExp(`${todayName}[^:]*:\\s*([^"|\\n]+)`, 'i');
+            const fbMatch = rawQuote.match(fallBackRegex);
+            if (fbMatch && fbMatch[1]) {
+                return fbMatch[1].split('.')[0].trim().replace(/^"|"$/g, '');
+            }
+
+            // 4. Default single string quote
+            return rawQuote.replace(/^"|"$/g, '').trim();
+        }
+
+        // --- Local Data Management & Import/Export Modal ---
+        function openDataModal() {
+            const saved = localStorage.getItem('trit_data') || JSON.stringify(appData);
+            const bytes = new Blob([saved]).size;
+            const kb = (bytes / 1024).toFixed(2);
+            
+            document.getElementById('storageStatus').textContent = `Key: 'trit_data' (${kb} KB stored locally)`;
+            document.getElementById('storageInspectBox').textContent = JSON.stringify(appData, null, 2);
+            document.getElementById('dataModal').classList.add('active');
+        }
+
+        function exportDataJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `trit_data_backup_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast('JSON backup exported!');
+        }
+
+        function copyDataJSON() {
+            const jsonStr = JSON.stringify(appData, null, 2);
+            navigator.clipboard.writeText(jsonStr).then(() => showToast('Data copied to clipboard!')).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = jsonStr;
+                document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+                showToast('Data copied to clipboard!');
+            });
+        }
+
+        function importDataJSON() {
+            const input = document.getElementById('importJsonInput').value.trim();
+            if (!input) { showToast('Paste JSON backup first'); return; }
+            try {
+                const parsed = JSON.parse(input);
+                appData = deepMerge(DEFAULT_DATA, parsed);
+                saveData();
+                showToast('Data restored successfully!');
+                document.getElementById('importJsonInput').value = '';
+                closeModal('dataModal');
+                renderDashboard();
+                if (document.getElementById('page-plan').classList.contains('active')) renderPlan();
+            } catch(e) {
+                showToast('Invalid JSON data format');
+            }
+        }
+
+        function resetLocalStorage() {
+            if (confirm('Are you sure you want to reset all local storage data? This cannot be undone.')) {
+                if (confirm('Final Warning: All logged activities, plans, and events will be erased!')) {
+                    localStorage.removeItem('trit_data');
+                    appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+                    saveData();
+                    showToast('Local Storage reset complete!');
+                    closeModal('dataModal');
+                    renderDashboard();
+                    location.reload();
+                }
+            }
         }
 
         // --- Dashboard ---
@@ -906,6 +1024,8 @@
             
             if (appData.plan && appData.plan.motivationalQuote) {
                 document.getElementById('dashQuote').textContent = `"${getTodayQuote(appData.plan.motivationalQuote)}"`;
+            } else {
+                document.getElementById('dashQuote').textContent = `"Consistency beats intensity. Keep pushing forward!"`;
             }
             
             const runs = appData.runs;
@@ -946,7 +1066,7 @@
                         <div style="background:var(--green); width:${bikePct}%; transition: var(--transition);"></div>
                         <div style="background:var(--blue); width:${swimPct}%; transition: var(--transition);"></div>
                     </div>
-                    <div style="display:flex; justify-space-between; font-size:11px; margin-top:8px; color:var(--text-dim); font-weight: 600;">
+                    <div style="display:flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size:11px; margin-top:8px; color:var(--text-dim); font-weight: 600;">
                         <span style="color:var(--accent-bright)">Run ${Math.round(runPct)}%</span>
                         <span style="color:var(--green)">Bike ${Math.round(bikePct)}%</span>
                         <span style="color:var(--blue)">Swim ${Math.round(swimPct)}%</span>
