@@ -679,8 +679,33 @@
         let currentYear = currentDate.getFullYear();
         let selectedDateStr = new Date().toISOString().slice(0,10);
 
+        // --- Storage Management with Cookie Fallback ---
+        function setStorageItem(key, value) {
+            try {
+                localStorage.setItem(key, value);
+            } catch(e) {
+                document.cookie = key + "=" + encodeURIComponent(value) + "; path=/; max-age=31536000";
+            }
+        }
+
+        function getStorageItem(key) {
+            try {
+                const val = localStorage.getItem(key);
+                if (val) return val;
+            } catch(e) {}
+            
+            const nameEQ = key + "=";
+            const ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+            }
+            return null;
+        }
+
         function loadData() {
-            const saved = localStorage.getItem('trit_data');
+            const saved = getStorageItem('trit_data');
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
@@ -691,26 +716,31 @@
         }
 
         function deepMerge(target, source) {
-            let output = Object.assign({}, target);
-            if (isObject(target) && isObject(source)) {
-                Object.keys(source).forEach(key => {
-                    if (isObject(source[key])) {
-                        if (!(key in target)) Object.assign(output, { [key]: source[key] });
-                        else output[key] = deepMerge(target[key], source[key]);
-                    } else {
-                        Object.assign(output, { [key]: source[key] });
-                    }
-                });
+            if (!isObject(target) || !isObject(source)) {
+                return source !== undefined ? source : target;
             }
+            let output = Object.assign({}, target);
+            Object.keys(source).forEach(key => {
+                if (isObject(source[key])) {
+                    if (!(key in target) || !isObject(target[key])) {
+                        output[key] = source[key];
+                    } else {
+                        output[key] = deepMerge(target[key], source[key]);
+                    }
+                } else {
+                    output[key] = source[key];
+                }
+            });
             return output;
         }
+        
         function isObject(item) { return (item && typeof item === 'object' && !Array.isArray(item)); }
 
         function saveData() { 
             try {
-                localStorage.setItem('trit_data', JSON.stringify(appData)); 
+                setStorageItem('trit_data', JSON.stringify(appData)); 
             } catch(e) {
-                console.error("Failed to save data to localStorage:", e);
+                console.error("Failed to save data:", e);
             }
         }
 
@@ -956,7 +986,7 @@
 
         // --- Local Data Management & Import/Export Modal ---
         function openDataModal() {
-            const saved = localStorage.getItem('trit_data') || JSON.stringify(appData);
+            const saved = getStorageItem('trit_data') || JSON.stringify(appData);
             const bytes = new Blob([saved]).size;
             const kb = (bytes / 1024).toFixed(2);
             
@@ -1006,7 +1036,8 @@
         function resetLocalStorage() {
             if (confirm('Are you sure you want to reset all local storage data? This cannot be undone.')) {
                 if (confirm('Final Warning: All logged activities, plans, and events will be erased!')) {
-                    localStorage.removeItem('trit_data');
+                    try { localStorage.removeItem('trit_data'); } catch(e) {}
+                    document.cookie = "trit_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                     appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
                     saveData();
                     showToast('Local Storage reset complete!');
