@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="icon" href="https://i.ibb.co/GffsSBZz/IMG-4427.png" type="image/png">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/GffsSBZz/IMG-4427.png">
     <title>trit Dashboard</title>
+    
+    <!-- Favicons & Homescreen Icons -->
+    <link rel="icon" href="https://i.ibb.co/GffsSBZz/IMG-4427.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/GffsSBZz/IMG-4427.png">
+
+    <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         :root {
             --bg-primary: #0f0f13;
@@ -353,7 +358,7 @@
         /* General Modals */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 15, 19, 0.8); backdrop-filter: blur(5px); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { display: flex; }
-        .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; width: 100%; max-width: 500px; max-height: 80vh; overflow-y: auto; box-shadow: var(--shadow); }
+        .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; width: 100%; max-width: 500px; max-height: 80vh; overflow-y: auto; box-shadow: var(--shadow); position: relative; }
         .modal-close { float: right; background: none; border: none; color: var(--text-secondary); font-size: 28px; line-height: 1; cursor: pointer; }
         .modal h2 { font-size: 20px; margin-bottom: 6px; color: var(--text-primary); font-weight: 700; }
         .modal h3 { font-size: 13px; color: var(--accent-bright); font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -371,7 +376,7 @@
         .section-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
         .phase-badge { display: inline-block; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; background: var(--accent-dim); color: var(--accent-bright); border: 1px solid var(--accent); }
 
-        .toast { position: fixed; bottom: calc(100px + env(safe-area-inset-bottom)); left: 50%; transform: translate(-50%, 20px); background: var(--bg-card); border: 1px solid var(--accent); color: var(--text-primary); padding: 14px 24px; border-radius: 30px; font-size: 13px; font-weight: 600; z-index: 3000; opacity: 0; transition: var(--transition); text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); white-space: nowrap; }
+        .toast { position: fixed; bottom: calc(100px + env(safe-area-inset-bottom)); left: 50%; transform: translate(-50%, 20px); background: var(--bg-card); border: 1px solid var(--accent); color: var(--text-primary); padding: 14px 24px; border-radius: 30px; font-size: 13px; font-weight: 600; z-index: 3000; opacity: 0; transition: var(--transition); text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); white-space: nowrap; pointer-events: none; }
         .toast.show { transform: translate(-50%, 0); opacity: 1; }
 
         .ai-tab-container { display: flex; background: var(--bg-secondary); border-radius: var(--radius-sm); padding: 6px; margin-bottom: 20px; }
@@ -568,47 +573,6 @@
         </div>
     </main>
 
-    <!-- New Profile & Settings Modal -->
-    <div class="modal-overlay" id="profileModal">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('profileModal')">&times;</button>
-            <h2>Profile</h2>
-            <div class="ai-tab-container">
-                <div class="ai-tab active" id="tabYou" onclick="switchProfileTab('you')">You</div>
-                <div class="ai-tab" id="tabSettings" onclick="switchProfileTab('settings')">Settings</div>
-            </div>
-
-            <div id="profileTabYou" style="display:block;">
-                <p style="color:var(--text-secondary); font-size:14px; margin-bottom:16px;">Set up your baseline, goals, and target race date.</p>
-                <button class="btn btn-accent" style="width:100%; margin-bottom:16px;" onclick="closeModal('profileModal'); startProfileWizard();">Edit Athlete Profile</button>
-                <div id="profileSummary" style="font-size:13px; color:var(--text-dim); background:var(--bg-secondary); padding:16px; border-radius:var(--radius-sm); line-height: 1.6;"></div>
-            </div>
-
-            <div id="profileTabSettings" style="display:none;">
-                <h3 style="margin-bottom: 8px;">Cloud Sync & Auth</h3>
-                <div id="authSectionUnlogged">
-                    <p style="font-size:12px; color:var(--text-dim); margin-bottom:16px;">You can use trit without an account (data is strictly saved locally). Register to sync across devices automatically.</p>
-                    <div class="form-group"><input type="email" id="authEmail" placeholder="Email Address"></div>
-                    <div class="form-group"><input type="password" id="authPassword" placeholder="Password"></div>
-                    <div style="display:flex; gap:10px; margin-top:16px;">
-                        <button class="btn btn-accent" style="flex:1;" onclick="handleRegister()">Register</button>
-                        <button class="btn btn-outline" style="flex:1;" onclick="handleLogin()">Login</button>
-                    </div>
-                </div>
-                
-                <div id="authSectionLogged" style="display:none;">
-                    <p style="font-size:13px; color:var(--text-primary); margin-bottom:16px;">Logged in as: <strong id="loggedUserEmail" style="color: var(--accent-bright);"></strong></p>
-                    <button class="btn" style="width:100%; background:var(--warning-dim); color:var(--warning); border-color:var(--warning);" onclick="handleLogout()">Logout</button>
-                </div>
-
-                <div style="margin-top:24px; font-size:10px; color:var(--text-dim); line-height:1.5; border-top:1px solid var(--border); padding-top:16px;">
-                    <p style="margin-bottom:8px;"><strong>Privacy Disclaimer:</strong> This application stores user account data and application state in a cloud database powered by Supabase. Access is strictly limited to authenticated accounts.</p>
-                    <p><strong>Data Ownership & Exports:</strong> All application data remains fully exportable as a local JSON file at any time. The owner/developer takes no liability for data loss.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Unified Wizard Modal -->
     <div class="wizard-overlay" id="wizardModal">
         <div class="wizard-container">
@@ -638,7 +602,7 @@
         </div>
     </div>
 
-    <!-- Guide Modal -->
+    <!-- Guide Modal (with hidden Developer Wall trigger) -->
     <div class="modal-overlay" id="guideModal">
         <div class="modal">
             <button class="modal-close" onclick="closeModal('guideModal')">&times;</button>
@@ -651,14 +615,33 @@
                 <p><strong>Step 4: Update & Adapt</strong><br>Log activities using the wizard. Run a 'Weekly Update' to let the AI reroute your training!</p>
             </div>
             <button class="btn btn-accent" style="width:100%; margin-top:24px; padding:14px;" onclick="closeModal('guideModal')">Got it, let's go!</button>
+            <!-- Hidden Data Modal Trigger -->
+            <div onclick="checkDevPassword()" style="width: 15px; height: 15px; position: absolute; bottom: 0; right: 0; opacity: 0; cursor: pointer; z-index: 10;"></div>
+        </div>
+    </div>
+
+    <!-- Profile & Settings Modal -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('profileModal')">&times;</button>
+            <h2>Profile & Settings</h2>
             
-            <div style="display:flex; justify-content:center; margin-top:16px;">
-                <button style="width: 20px; height: 20px; border-radius: 50%; background: transparent; border: none; cursor: pointer;" onclick="promptDevWall()"></button>
+            <div class="ai-tab-container">
+                <div class="ai-tab active" id="tabProfileYou" onclick="switchProfileTab('you')">You</div>
+                <div class="ai-tab" id="tabProfileSettings" onclick="switchProfileTab('settings')">Settings</div>
+            </div>
+
+            <div id="profileViewYou">
+                <!-- Content injected via JS -->
+            </div>
+
+            <div id="profileViewSettings" style="display:none;">
+                <!-- Content injected via JS -->
             </div>
         </div>
     </div>
 
-    <!-- Data & Storage Management Modal (Hidden by Default behind Developer Wall) -->
+    <!-- Data & Storage Management Modal (Developer Wall) -->
     <div class="modal-overlay" id="dataModal">
         <div class="modal">
             <button class="modal-close" onclick="closeModal('dataModal')">&times;</button>
@@ -695,22 +678,25 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // Supabase Initialization
+        // --- Supabase Config & Initialization ---
         const supabaseUrl = 'https://gslrdrpoihstzxspgagn.supabase.co';
         const supabaseKey = 'sb_publishable_9t_6D9kuxVdBkp22JKQdgA_iOs7SO1Z';
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-        let currentUser = null;
+        let session = null;
+        let isSyncing = false;
+        let pendingSync = false;
 
         const DEFAULT_DATA = {
+            lastModified: 0,
             profile: {
-                age: 25,
+                age: 30,
                 event: "Olympic Triathlon",
-                targetTime: "2:15:00",
+                targetTime: "2:30:00",
                 raceDate: "",
                 planStartDate: new Date().toISOString().slice(0, 10),
                 currentWeek: 1,
                 hasSeenGuide: false,
-                stats: { swim: "1500m in 25min", bike: "30kph on flat", run: "5K in 20:00" },
+                stats: { swim: "1500m in 30min", bike: "30kph on flat", run: "10K in 45:00" },
                 gear: { bike: "Canyon Aeroad", shoes: "Adidas Evo SL", watch: "Garmin Forerunner" },
                 limitations: "", 
                 availability: { mon: 0, tue: 60, wed: 60, thu: 60, fri: 60, sat: 180, sun: 180 }
@@ -732,7 +718,7 @@
         let currentYear = currentDate.getFullYear();
         let selectedDateStr = new Date().toISOString().slice(0,10);
 
-        // --- Storage Management with Cookie Fallback ---
+        // --- Storage & Sync Management ---
         function setStorageItem(key, value) {
             try {
                 localStorage.setItem(key, value);
@@ -789,143 +775,79 @@
         
         function isObject(item) { return (item && typeof item === 'object' && !Array.isArray(item)); }
 
-        function saveLocalOnly() {
-            try {
-                setStorageItem('trit_data', JSON.stringify(appData)); 
-            } catch(e) {
-                console.error("Failed to save data locally:", e);
-            }
-        }
-
         function saveData() { 
-            saveLocalOnly();
-            if (currentUser) {
-                pushDataToCloud().catch(err => console.log("Cloud sync delayed", err));
+            appData.lastModified = Date.now();
+            saveDataLocally();
+            if (session) triggerCloudSync();
+        }
+
+        function saveDataLocally() {
+            try { setStorageItem('trit_data', JSON.stringify(appData)); } catch(e) {}
+        }
+
+        async function triggerCloudSync() {
+            if (isSyncing) { pendingSync = true; return; }
+            isSyncing = true; pendingSync = false;
+            try {
+                await supabase.from('user_data').upsert({
+                    user_id: session.user.id,
+                    data: appData
+                });
+            } catch (e) {
+                console.error('Cloud sync failed', e);
             }
+            isSyncing = false;
+            if (pendingSync) triggerCloudSync();
         }
 
-        // Auto-save on page hide/unload/online 
-        window.addEventListener('beforeunload', saveData);
-        window.addEventListener('pagehide', saveData);
-        window.addEventListener('online', () => { if(currentUser) pushDataToCloud(); });
+        // Offline to Online catching up
+        window.addEventListener('online', () => { if (session) triggerCloudSync(); });
+        window.addEventListener('beforeunload', saveDataLocally);
+        window.addEventListener('pagehide', saveDataLocally);
 
-        // --- Auth & Cloud Sync ---
-        async function handleRegister() {
-            const email = document.getElementById('authEmail').value;
-            const password = document.getElementById('authPassword').value;
-            if(!email || !password) return showToast("Enter email and password");
-            
-            localStorage.setItem('trit_pending_signup', 'true');
-            const { data, error } = await supabase.auth.signUp({ email, password });
-            if (error) {
-                showToast(error.message);
-                localStorage.removeItem('trit_pending_signup');
-            } else {
-                showToast("Check your email for a verification link!");
-            }
-        }
-
-        async function handleLogin() {
-            const email = document.getElementById('authEmail').value;
-            const password = document.getElementById('authPassword').value;
-            if(!email || !password) return showToast("Enter email and password");
-            
-            localStorage.removeItem('trit_pending_signup');
-            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) showToast(error.message);
-            else showToast("Logged in successfully!");
-        }
-
-        async function handleLogout() {
-            await supabase.auth.signOut();
-            currentUser = null;
-            updateAuthUI();
-            showToast("Logged out");
-        }
-
-        supabase.auth.onAuthStateChange(async (event, session) => {
-            if (session && session.user) {
-                currentUser = session.user;
-                updateAuthUI();
-                
-                if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
-                    const isSignup = localStorage.getItem('trit_pending_signup');
-                    if (isSignup) {
-                        await pushDataToCloud();
-                        localStorage.removeItem('trit_pending_signup');
-                        showToast("Local data synced to account.");
-                    } else {
-                        const { data, error } = await supabase.from('user_data').select('data').eq('user_id', currentUser.id).single();
-                        if (data && data.data) {
+        // Auth State Listener
+        supabase.auth.onAuthStateChange(async (event, currentSession) => {
+            session = currentSession;
+            if (event === 'SIGNED_IN' && session) {
+                try {
+                    const { data, error } = await supabase
+                        .from('user_data')
+                        .select('data')
+                        .eq('user_id', session.user.id)
+                        .single();
+                    
+                    const forceOverwrite = localStorage.getItem('force_overwrite_from_db') === 'true';
+                    
+                    if (data && data.data) {
+                        if (forceOverwrite) {
                             appData = deepMerge(DEFAULT_DATA, data.data);
-                            saveLocalOnly();
-                            renderDashboard();
-                            if(document.getElementById('page-plan').classList.contains('active')) renderPlan();
-                            if(document.getElementById('page-calendar').classList.contains('active')) renderCalendar();
-                            if(document.getElementById('page-history').classList.contains('active')) renderHistory();
-                            showToast("Data synced from cloud.");
+                            saveDataLocally();
+                            showToast('Cloud data synced successfully!');
                         } else {
-                            await pushDataToCloud();
+                            // Merge conflict check by timestamp
+                            if ((data.data.lastModified || 0) > (appData.lastModified || 0)) {
+                                appData = deepMerge(DEFAULT_DATA, data.data);
+                                saveDataLocally();
+                            } else if ((appData.lastModified || 0) > (data.data.lastModified || 0)) {
+                                triggerCloudSync();
+                            }
                         }
+                    } else {
+                        triggerCloudSync(); // DB empty, user just registered. Push local up.
+                        showToast('Local data backed up to cloud!');
                     }
+                    
+                    localStorage.removeItem('force_overwrite_from_db');
+                    renderAll();
+                } catch (err) {
+                    console.error('Error handling DB sync', err);
                 }
-            } else {
-                currentUser = null;
-                updateAuthUI();
+            }
+            
+            if (document.getElementById('profileModal').classList.contains('active')) {
+                renderProfileSettings();
             }
         });
-
-        async function pushDataToCloud() {
-            if (!currentUser) return;
-            const { error } = await supabase.from('user_data').upsert({
-                user_id: currentUser.id,
-                data: appData
-            });
-            if (error) console.error("Sync error:", error);
-        }
-
-        function updateAuthUI() {
-            const unlogged = document.getElementById('authSectionUnlogged');
-            const logged = document.getElementById('authSectionLogged');
-            if(currentUser) {
-                unlogged.style.display = 'none';
-                logged.style.display = 'block';
-                document.getElementById('loggedUserEmail').textContent = currentUser.email;
-            } else {
-                unlogged.style.display = 'block';
-                logged.style.display = 'none';
-            }
-        }
-
-        // --- Profile Modal & Developer Wall ---
-        function openProfileModal() {
-            document.getElementById('profileModal').classList.add('active');
-            const p = appData.profile;
-            document.getElementById('profileSummary').innerHTML = `
-                <strong>Target:</strong> ${p.event} (${p.targetTime})<br>
-                <strong>Race Date:</strong> ${p.raceDate || 'Not set'}<br>
-                <strong>Plan Start:</strong> ${p.planStartDate}<br>
-                <div style="margin-top:8px;"><strong>Swim:</strong> ${p.stats.swim} <br><strong>Bike:</strong> ${p.stats.bike} <br><strong>Run:</strong> ${p.stats.run}</div>
-            `;
-            updateAuthUI();
-        }
-
-        function switchProfileTab(tab) {
-            document.getElementById('tabYou').classList.toggle('active', tab === 'you');
-            document.getElementById('tabSettings').classList.toggle('active', tab === 'settings');
-            document.getElementById('profileTabYou').style.display = tab === 'you' ? 'block' : 'none';
-            document.getElementById('profileTabSettings').style.display = tab === 'settings' ? 'block' : 'none';
-        }
-
-        function promptDevWall() {
-            const pwd = prompt("Developer access:");
-            if (pwd === "Hello123") {
-                closeModal('guideModal');
-                openDataModal();
-            } else if (pwd) {
-                showToast("Access Denied");
-            }
-        }
 
         // Core Initialization
         document.addEventListener('DOMContentLoaded', () => {
@@ -933,12 +855,19 @@
             if (!appData.profile.hasSeenGuide) {
                 openGuide();
                 appData.profile.hasSeenGuide = true;
-                saveData();
+                saveDataLocally();
             }
             document.getElementById('evDate').value = new Date().toISOString().slice(0,10);
             renderCalendar();
             renderSavedCategories();
         });
+
+        function renderAll() {
+            renderDashboard();
+            if (document.getElementById('page-plan').classList.contains('active')) renderPlan();
+            if (document.getElementById('page-calendar').classList.contains('active')) renderCalendar();
+            if (document.getElementById('page-history').classList.contains('active')) renderHistory();
+        }
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -957,6 +886,137 @@
             if (pageId === 'plan') renderPlan();
             if (pageId === 'calendar') renderCalendar();
             if (pageId === 'history') renderHistory();
+        }
+
+        // --- Profile & Settings Views ---
+        const legalDisclaimerHTML = `
+            <hr style="border: 0; border-top: 1px solid var(--border); margin: 24px 0;">
+            <div style="font-size: 11px; color: var(--text-dim); line-height: 1.5;">
+                <p style="margin-bottom: 8px;"><strong>Privacy Disclaimer:</strong> This application stores user account data and application state in a cloud database powered by Supabase. Access is strictly limited to authenticated accounts.</p>
+                <p><strong>Data Ownership & Exports:</strong> All application data remains fully exportable as a local JSON file at any time. The owner/developer takes no liability for data loss.</p>
+            </div>
+        `;
+
+        function openProfileModal() {
+            renderProfileYou();
+            renderProfileSettings();
+            document.getElementById('profileModal').classList.add('active');
+            switchProfileTab('you');
+        }
+
+        function switchProfileTab(tab) {
+            document.getElementById('tabProfileYou').classList.toggle('active', tab === 'you');
+            document.getElementById('tabProfileSettings').classList.toggle('active', tab === 'settings');
+            document.getElementById('profileViewYou').style.display = tab === 'you' ? 'block' : 'none';
+            document.getElementById('profileViewSettings').style.display = tab === 'settings' ? 'block' : 'none';
+        }
+
+        function renderProfileYou() {
+            const p = appData.profile;
+            let raceCountdownText = "No race date set.";
+            if (p.raceDate) {
+                const today = new Date();
+                const race = new Date(p.raceDate);
+                today.setHours(0,0,0,0);
+                race.setHours(0,0,0,0);
+                const diffTime = race - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                if (diffDays < 0) {
+                    raceCountdownText = "Race has passed!";
+                } else if (diffDays === 0) {
+                    raceCountdownText = "Race is TODAY!";
+                } else {
+                    const w = Math.floor(diffDays / 7);
+                    const d = diffDays % 7;
+                    raceCountdownText = `${w > 0 ? w + ' weeks, ' : ''}${d} days to go!`;
+                }
+            }
+            
+            document.getElementById('profileViewYou').innerHTML = `
+                <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px;">
+                    <h3 style="font-size: 13px; color: var(--accent-bright); font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Upcoming Race</h3>
+                    <div style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">${p.event}</div>
+                    <div style="font-size: 14px; color: var(--text-secondary);">${raceCountdownText}</div>
+                </div>
+                
+                <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="color: var(--text-secondary); font-size: 13px;">Bike</span>
+                        <span style="font-weight: 600; font-size: 13px;">${p.gear.bike}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="color: var(--text-secondary); font-size: 13px;">Shoes</span>
+                        <span style="font-weight: 600; font-size: 13px;">${p.gear.shoes}</span>
+                    </div>
+                </div>
+                
+                <button class="btn btn-accent" style="width: 100%; padding: 14px;" onclick="startProfileWizard(); closeModal('profileModal');">Edit Athlete Profile</button>
+            `;
+        }
+
+        function renderProfileSettings() {
+            const view = document.getElementById('profileViewSettings');
+            if (session) {
+                view.innerHTML = `
+                    <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px; text-align: center;">
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">Logged in as</p>
+                        <p style="font-size: 15px; font-weight: 700; color: var(--text-primary);">${session.user.email}</p>
+                    </div>
+                    <button class="btn btn-outline" style="width: 100%; padding: 14px; margin-bottom: 12px;" onclick="handleLogout()">Log Out</button>
+                    ${legalDisclaimerHTML}
+                `;
+            } else {
+                view.innerHTML = `
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; text-align: center;">Register or log in to sync your data to the cloud. You can also use the app offline.</p>
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <input type="email" id="authEmail" placeholder="Email Address">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <input type="password" id="authPassword" placeholder="Password">
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <button class="btn btn-accent" style="flex: 1;" onclick="handleLogin()">Log In</button>
+                        <button class="btn btn-outline" style="flex: 1;" onclick="handleRegister()">Register</button>
+                    </div>
+                    ${legalDisclaimerHTML}
+                `;
+            }
+        }
+
+        // --- Authentication Functions ---
+        async function handleRegister() {
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+            if (!email || !password) return showToast('Email and Password required');
+            
+            const { data, error } = await supabase.auth.signUp({ email, password });
+            if (error) {
+                showToast('Error: ' + error.message);
+            } else {
+                showToast('Check your email for the verification link!');
+            }
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+            if (!email || !password) return showToast('Email and Password required');
+            
+            localStorage.setItem('force_overwrite_from_db', 'true'); // Flag to overwrite local if data exists
+            showToast('Logging in...');
+            
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) {
+                localStorage.removeItem('force_overwrite_from_db');
+                showToast('Error: ' + error.message);
+            }
+        }
+
+        async function handleLogout() {
+            await supabase.auth.signOut();
+            showToast('Logged out');
+            renderProfileSettings();
         }
 
         // --- Wizard System ---
@@ -1018,27 +1078,25 @@
                     title: 'Core Target', canSkip: false,
                     html: `
                         <div class="form-group"><label>Age</label><input type="number" id="wAge" value="${p.age}"></div>
-                        <div class="form-group"><label>Target Event / Goal</label><input type="text" id="wEvent" value="${p.event}" placeholder="Olympic Triathlon, or 'Get fit'"></div>
-                        <div class="form-group"><label>Target Time</label><input type="text" id="wTime" value="${p.targetTime}" placeholder="2:15:00"></div>
-                        <div style="display:flex; gap:10px;">
-                            <div class="form-group" style="flex:1;"><label>Plan Start</label><input type="date" id="wDate" value="${p.planStartDate}"></div>
-                            <div class="form-group" style="flex:1;"><label>Race Date (Opt)</label><input type="date" id="wRaceDate" value="${p.raceDate || ''}"></div>
-                        </div>
+                        <div class="form-group"><label>Target Event / Goal</label><input type="text" id="wEvent" value="${p.event}" placeholder="Half Ironman, or 'Get fit'"></div>
+                        <div class="form-group"><label>Target Time</label><input type="text" id="wTime" value="${p.targetTime}" placeholder="6:00:00"></div>
+                        <div class="form-group"><label>Race Date</label><input type="date" id="wRaceDate" value="${p.raceDate || ''}"></div>
+                        <div class="form-group"><label>Plan Start Date</label><input type="date" id="wDate" value="${p.planStartDate}"></div>
                     `,
                     onSave: () => {
                         p.age = document.getElementById('wAge').value || p.age;
                         p.event = document.getElementById('wEvent').value || p.event;
                         p.targetTime = document.getElementById('wTime').value || p.targetTime;
+                        p.raceDate = document.getElementById('wRaceDate').value || p.raceDate;
                         p.planStartDate = document.getElementById('wDate').value || p.planStartDate;
-                        p.raceDate = document.getElementById('wRaceDate').value;
                     }
                 },
                 {
                     title: 'Current Baseline', canSkip: false,
                     html: `
-                        <div class="form-group"><label>Current Swim (e.g. 1500m in 25min)</label><input type="text" id="wSwim" value="${p.stats.swim}"></div>
+                        <div class="form-group"><label>Current Swim (e.g. 2km in 44min)</label><input type="text" id="wSwim" value="${p.stats.swim}"></div>
                         <div class="form-group"><label>Current Bike (e.g. 30kph flat)</label><input type="text" id="wBike" value="${p.stats.bike}"></div>
-                        <div class="form-group"><label>Current Run (e.g. 5K in 20:00)</label><input type="text" id="wRun" value="${p.stats.run}"></div>
+                        <div class="form-group"><label>Current Run (e.g. 5K in 19:30)</label><input type="text" id="wRun" value="${p.stats.run}"></div>
                     `,
                     onSave: () => {
                         p.stats.swim = document.getElementById('wSwim').value;
@@ -1050,11 +1108,13 @@
                     title: 'Equipment & Limitations', canSkip: true,
                     html: `
                         <p style="font-size:12px; color:var(--text-dim); margin-bottom:12px;">Let the AI know your setup and any issues.</p>
-                        <div class="form-group"><label>Primary Gear (Bikes, shoes)</label><input type="text" id="wGearBike" value="${p.gear.bike || ''} / ${p.gear.shoes || ''}"></div>
+                        <div class="form-group"><label>Primary Gear (Bikes)</label><input type="text" id="wGearBike" value="${p.gear.bike}"></div>
+                        <div class="form-group"><label>Shoes</label><input type="text" id="wGearShoes" value="${p.gear.shoes}"></div>
                         <div class="form-group"><label>Current Limitations</label><textarea id="wLimits" placeholder="e.g. Knee hurts, cannot run this week.">${p.limitations}</textarea></div>
                     `,
                     onSave: () => {
                         p.gear.bike = document.getElementById('wGearBike').value;
+                        p.gear.shoes = document.getElementById('wGearShoes').value;
                         p.limitations = document.getElementById('wLimits').value;
                     }
                 },
@@ -1131,43 +1191,41 @@
             });
         }
 
-        // --- Motivational Quote Helper (Single quote per day fix) ---
+        // --- Motivational Quote Helper ---
         function getTodayQuote(rawQuote) {
             if (!rawQuote || typeof rawQuote !== 'string') return "Consistency beats intensity. Keep pushing forward!";
-
             const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
             const todayName = days[new Date().getDay()];
 
-            // 1. Pipe-separated quote strings
             if (rawQuote.includes('|')) {
                 const quotes = rawQuote.split('|').map(q => q.trim());
                 const match = quotes.find(q => q.toLowerCase().includes(todayName.toLowerCase()));
-                if (match) {
-                    return match.replace(new RegExp(`^${todayName}:?\\s*`, 'i'), '').replace(/^"|"$/g, '');
-                }
+                if (match) return match.replace(new RegExp(`^${todayName}:?\\s*`, 'i'), '').replace(/^"|"$/g, '');
                 const dayIdx = new Date().getDay();
                 return (quotes[dayIdx] || quotes[0]).replace(/^[A-Za-z]+:\s*/, '').replace(/^"|"$/g, '');
             }
 
-            // 2. Multi-day concatenated text
             const dayRegex = new RegExp(`(?:${todayName}|${todayName.slice(0,3)})\\s*:\\s*([^.|\\n]+(?=[\\s.]*(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)|$))`, 'i');
             const match = rawQuote.match(dayRegex);
-            if (match && match[1]) {
-                return match[1].trim().replace(/^"|"$/g, '');
-            }
+            if (match && match[1]) return match[1].trim().replace(/^"|"$/g, '');
 
-            // 3. Fallback matching quote section following current day name
             const fallBackRegex = new RegExp(`${todayName}[^:]*:\\s*([^"|\\n]+)`, 'i');
             const fbMatch = rawQuote.match(fallBackRegex);
-            if (fbMatch && fbMatch[1]) {
-                return fbMatch[1].split('.')[0].trim().replace(/^"|"$/g, '');
-            }
+            if (fbMatch && fbMatch[1]) return fbMatch[1].split('.')[0].trim().replace(/^"|"$/g, '');
 
-            // 4. Default single string quote
             return rawQuote.replace(/^"|"$/g, '').trim();
         }
 
-        // --- Local Data Management Modal ---
+        // --- Dev Wall Trigger & Local Data Management ---
+        function checkDevPassword() {
+            if(prompt("Enter Developer Password:") === "Hello123") {
+                closeModal('guideModal');
+                openDataModal();
+            } else {
+                showToast("Access Denied");
+            }
+        }
+
         function openDataModal() {
             const saved = getStorageItem('trit_data') || JSON.stringify(appData);
             const bytes = new Blob([saved]).size;
@@ -1222,7 +1280,7 @@
                     try { localStorage.removeItem('trit_data'); } catch(e) {}
                     document.cookie = "trit_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                     appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
-                    saveData();
+                    saveDataLocally();
                     showToast('Local Storage reset complete!');
                     closeModal('dataModal');
                     renderDashboard();
@@ -1359,7 +1417,6 @@
             renderCalendar();
         }
 
-        // Custom Categories
         function renderSavedCategories() {
             const list = document.getElementById('savedCategoriesList');
             if(!appData.customCategories) appData.customCategories = [];
@@ -1640,20 +1697,6 @@
             const a = p.availability;
             const availStr = `Mon: ${a.mon}m, Tue: ${a.tue}m, Wed: ${a.wed}m, Thu: ${a.thu}m, Fri: ${a.fri}m, Sat: ${a.sat}m, Sun: ${a.sun}m. (0 means NO training possible).`;
             
-            let weeksText = "a 5-week block";
-            if (p.raceDate && p.planStartDate) {
-                const rd = new Date(p.raceDate);
-                const sd = new Date(p.planStartDate);
-                if(!isNaN(rd) && !isNaN(sd)) {
-                    const diffTime = rd - sd;
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    if (diffDays > 0) {
-                        const diffWeeks = Math.ceil(diffDays / 7);
-                        weeksText = `a ${diffWeeks}-week block leading up to the race on ${p.raceDate}`;
-                    }
-                }
-            }
-            
             let prompt = "";
 
             if (currentPromptMode === 'initial') {
@@ -1663,14 +1706,15 @@
 • Age: ${p.age}
 • Target: ${p.event} (Goal Time: ${p.targetTime})
 • Baseline: Swim: ${p.stats.swim} | Bike: ${p.stats.bike} | Run: ${p.stats.run}
-• Gear: Bike: ${p.gear.bike}
+• Gear: Bike: ${p.gear.bike} | Shoes: ${p.gear.shoes}
 • Current Limitations: ${p.limitations || "None"}
 • Availability: ${availStr}
 
 [TASKS]
 1. Assess goal realism and provide direct encouragement or modifications in "specialInformation".
 2. Create a progressive plan. 
-   - Tailor specifically to their discipline goals. Build ${weeksText}. Multiple sessions in a single day are allowed.
+   - If the user does not have a specific race date, generate a 5-week block.
+   - Tailor specifically to their discipline goals. Multiple sessions in a single day are allowed.
 3. Provide daily motivational quotes formatted with explicit day dividers using pipes, e.g. "Monday: ... | Tuesday: ... | Wednesday: ..." in "motivationalQuote".
 4. If using specific terminology in descriptions, wrap it in pipes (e.g., |Brick Workout|) and add the definition and 'how to execute' to the "dictionary" array.
 5. Output strict JSON only.
